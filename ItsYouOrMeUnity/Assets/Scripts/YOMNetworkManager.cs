@@ -77,8 +77,20 @@ public class YOMNetworkManager : NetworkManager
         }
 
         if (playing)
-        {
+        { 
             print("Player left during game");
+            HashSet<NetworkIdentity> tmp = new HashSet<NetworkIdentity>(conn.clientOwnedObjects);
+            print(tmp.Count);
+            foreach (NetworkIdentity netIdentity in tmp)
+            {
+                foreach (GameObject g in GameSaveHolder.gsh.players)
+                {
+                    if (netIdentity.gameObject == g)
+                    {
+                        g.GetComponent<PlayerScript>().connected = false;
+                    }
+                }
+            }
         }
         
     }

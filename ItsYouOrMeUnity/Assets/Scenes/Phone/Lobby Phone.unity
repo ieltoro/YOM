@@ -1343,8 +1343,6 @@ MonoBehaviour:
   - {fileID: 1729132081}
   - {fileID: 476864952}
   - {fileID: 2138685164}
-  yes: {fileID: 0}
-  id: {fileID: 0}
   manager: {fileID: 1866337865}
   ifNameplayer: {fileID: 1022874918}
   idInput: {fileID: 2117158292}
@@ -1665,6 +1663,7 @@ MonoBehaviour:
   playerName: 
   cosmetic: 3
   playerID: 
+  dead: 0
   localPlayer: {fileID: 0}
   players: []
 --- !u!4 &1486552038
@@ -1988,7 +1987,7 @@ MonoBehaviour:
   - {fileID: 5096845430482939368, guid: c497d561c0aed824da890aeeff1998f2, type: 3}
   - {fileID: 2818882122318092988, guid: b59f40ec6695a9b47ac69f74f2f30cf9, type: 3}
   - {fileID: 7951208706891590025, guid: 48476ddf76c2ee742a057680090261c2, type: 3}
-  - {fileID: 5493815448157322732, guid: ed6f18104cc4673478c56af13743701d, type: 3}
+  - {fileID: 395366023182708021, guid: 9ce5a7c95b97b9745a216cd9ca7fb4b1, type: 3}
   networkDiscovery: {fileID: 0}
   playing: 0
   ls: {fileID: 0}

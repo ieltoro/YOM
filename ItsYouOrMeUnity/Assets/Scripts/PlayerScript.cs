@@ -176,12 +176,13 @@ public class PlayerScript : NetworkBehaviour
     YOMNetworkManager manager;
     [SerializeField] GameObject characterPrefab;
     public GameObject myPlayer;
-
+    public bool connected;
     public int characterCosmetics;
 
     [Command]
     void ConnectUpdate(string pname, int cosmeticNr, string pid)
     {
+        connected = true;
         playerName = pname;
         id = pid;
         characterCosmetics = cosmeticNr;
@@ -210,6 +211,7 @@ public class PlayerScript : NetworkBehaviour
     }
     public void UpdateOwner()
     {
+        connected = true;
         string sceneName = SceneManager.GetActiveScene().name;
         RPC_UpdateOwner(leader, sceneName);
     }
@@ -260,8 +262,7 @@ public class PlayerScript : NetworkBehaviour
     }
     #endregion
     #region MiniGame
-    Avslutade här med att skicka till gs när man trycker på minigame
-    [Command]
+
     void MiniGameVote(int i)
     {
         gs.MinigameVotedFor(i);
@@ -272,6 +273,10 @@ public class PlayerScript : NetworkBehaviour
         if(i == 0)// redlight
         {
             FindObjectOfType<StopAndGoManager>().ConnectedToRed(this.gameObject);
+        }
+        if(i == 1)// PingTest
+        {
+            FindObjectOfType<PingTestManager>().ConnectedToRed(this.gameObject);
         }
     }
     public void AddVoteBalance(int add)

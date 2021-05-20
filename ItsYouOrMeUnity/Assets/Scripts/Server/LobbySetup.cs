@@ -124,6 +124,7 @@ public class LobbySetup : MonoBehaviour
         trans.TransitionOut();
 
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("Game");
+        //SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("InputPing");
     }
 }
