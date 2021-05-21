@@ -9,6 +9,10 @@
 [Bb]uilds/
 [Ll]ogs/
 [Mm]emoryCaptures/
+ItsYouOrMeUnity_clone_0/
+ItsYouOrMeUnity_clone_1/
+ItsYouOrMeUnity_clone_2/
+ItsYouOrMeUnity_clone_3/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta

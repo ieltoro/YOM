@@ -179,6 +179,8 @@ public class PlayerScript : NetworkBehaviour
     public bool connected;
     public int characterCosmetics;
 
+    #region Setup
+
     [Command]
     void ConnectUpdate(string pname, int cosmeticNr, string pid)
     {
@@ -216,7 +218,7 @@ public class PlayerScript : NetworkBehaviour
         RPC_UpdateOwner(leader, sceneName);
     }
 
-
+    #endregion
     #region game
     public void SetSpawn(int nr)
     {
