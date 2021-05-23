@@ -7,7 +7,7 @@ public class StopAndGoPlayer : NetworkBehaviour
 {
     public bool moving, redLight, canmove;
     public float speed = 0.75f;
-    StopAndGoManager rlm;
+    StopAndGoServer stopAGServer;
     public Transform startPos;
 
     private void Awake()
@@ -19,11 +19,11 @@ public class StopAndGoPlayer : NetworkBehaviour
         }
         if(isServer)
         {
-            rlm = FindObjectOfType<StopAndGoManager>();
-            rlm.players.Add(this);
-            if (rlm.leader == null)
+            stopAGServer = FindObjectOfType<StopAndGoServer>();
+            stopAGServer.players.Add(this);
+            if (stopAGServer.leader == null)
             {
-                rlm.leader = this.gameObject;
+                stopAGServer.leader = this.gameObject;
                 YouAreTheLeader();
             }
         }
@@ -64,7 +64,7 @@ public class StopAndGoPlayer : NetworkBehaviour
     [Command]
     void PlayersReady()
     {
-        rlm.StartRedLight();
+        stopAGServer.StartRedLight();
     }
     public void EnableMove()
     {

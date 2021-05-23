@@ -2939,6 +2939,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1bcb810c042338c47a4aa3f61d6bba3d, type: 2}
   - {fileID: 11400000, guid: 1bcb810c042338c47a4aa3f61d6bba3d, type: 2}
   - {fileID: 11400000, guid: 1bcb810c042338c47a4aa3f61d6bba3d, type: 2}
+  duoMinigames: []
   mgDisplay1: {fileID: 375298923}
   mgDisplay2: {fileID: 1088752013}
   voteCountText:
@@ -2980,6 +2981,7 @@ MonoBehaviour:
   start: 0
   moveTime: 0
   speed: 0.7
+  background: {fileID: 1119853251}
 --- !u!114 &1560664590
 MonoBehaviour:
   m_ObjectHideFlags: 0

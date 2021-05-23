@@ -274,11 +274,11 @@ public class PlayerScript : NetworkBehaviour
     {
         if(i == 0)// redlight
         {
-            FindObjectOfType<StopAndGoManager>().ConnectedToRed(this.gameObject);
+            FindObjectOfType<StopAndGoServer>().ConnectedToRed(this.gameObject);
         }
         if(i == 1)// PingTest
         {
-            FindObjectOfType<PingTestManager>().ConnectedToRed(this.gameObject);
+            FindObjectOfType<HideAndSeekServer>().ConnectedToRed(this.gameObject);
         }
     }
     public void AddVoteBalance(int add)

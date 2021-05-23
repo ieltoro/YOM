@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PingTestClient : MonoBehaviour
+public class HideAndSeekClient : MonoBehaviour
 {
     void Start()
     {

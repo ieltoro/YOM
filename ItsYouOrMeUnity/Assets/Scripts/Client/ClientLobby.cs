@@ -64,9 +64,4 @@ public class ClientLobby : MonoBehaviour
         ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().PlayerReady();
         ChangeUi(3);
     }
-    public void ChangeToGameSceen()
-    {
-        print("Change Scene");
-        SceneManager.LoadScene("Game Phone");
-    }
 }

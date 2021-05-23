@@ -45,12 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f9e7cfed8ea69479a687cd91a9cdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   prefab: {fileID: 1716445370352694194, guid: b81498c5af319d84e9d22d7ee5ffa605, type: 3}
   canvas: {fileID: 5692347146649035253}
   myPlayer: {fileID: 0}
   rb: {fileID: 0}
+  speed: 2.5
+  rotspeed: 5
 --- !u!114 &423445878983870632
 MonoBehaviour:
   m_ObjectHideFlags: 0

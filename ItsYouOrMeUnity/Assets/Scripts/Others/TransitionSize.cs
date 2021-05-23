@@ -11,6 +11,7 @@ public class TransitionSize : MonoBehaviour
     [SerializeField] float size;
     [SerializeField] float target, start, moveTime;
     [SerializeField] float speed = 0.7f;
+    [SerializeField] GameObject background;
     bool xBiggest;
 
     private void Start()
@@ -35,6 +36,7 @@ public class TransitionSize : MonoBehaviour
         else
             target = screenH * 2;
         circle.transform.gameObject.SetActive(true);
+        background.SetActive(false);
         animate = true;
         this.enabled = true;
     }

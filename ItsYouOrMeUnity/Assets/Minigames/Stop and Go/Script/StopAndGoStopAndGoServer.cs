@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StopAndGoManager : MonoBehaviour
+public class StopAndGoServer : MonoBehaviour
 {
     YOMNetworkManager manager;
     ServerCalls sc;
@@ -29,11 +29,6 @@ public class StopAndGoManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         trans.TransitionIn();
-        yield return new WaitForSeconds(7);
-        trans.TransitionOut();
-        yield return new WaitForSeconds(7);
-        print("Go back to stage");
-        ReturnFromGame();
     }
     int pConnected;
     public void ConnectedToRed(GameObject p)

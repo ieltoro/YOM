@@ -6,8 +6,10 @@ public class StopAndGoClient : MonoBehaviour
 {
     [SerializeField] GameObject[] canvas;
     public StopAndGoPlayer myPlayer;
+
     void Start()
     {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         FindObjectOfType<PlayerScript>().MinigameConnectedTo(0);
     }
     public void ChangeUI(int i)
@@ -21,7 +23,6 @@ public class StopAndGoClient : MonoBehaviour
     public void Leader()
     {
         ChangeUI(1);
-
     }
     public void PressedStartMiniGame()
     {

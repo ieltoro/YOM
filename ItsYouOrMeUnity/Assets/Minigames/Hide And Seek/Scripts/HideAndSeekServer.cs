@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PingTestManager : MonoBehaviour
+public class HideAndSeekServer : MonoBehaviour
 {
     YOMNetworkManager manager;
     ServerCalls sc;
-   
+    public List<GameObject> players;
+
     void Start()
     {
         manager = FindObjectOfType<YOMNetworkManager>();
-        sc = FindObjectOfType<ServerCalls>();
-        sc.ConnectedToMiniGame("PingTest");
+        ServerCalls.sc.ConnectedToMiniGame("InputPing");
     }
 
     public void ConnectedToRed(GameObject p)
     {
-        manager.SpawnNewPlayer(p, 3);
+        print("Spawn player");
+        manager.SpawnNewPlayer(p, 4);
     }
 }

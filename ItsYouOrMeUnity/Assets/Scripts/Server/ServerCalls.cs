@@ -32,12 +32,12 @@ public class ServerCalls : NetworkBehaviour
 
     public void StartingGame()
     {
-        RPC_StartingGame();
+        //RPC_StartingGame("Stop and Go);
     }
     [ClientRpc]
-    void RPC_StartingGame()
+    void RPC_StartingGame(string game)
     {
-        FindObjectOfType<ClientLobby>().ChangeToGameSceen();
+        SceneManager.LoadScene("Game Phone");
     }
     public void SendInfo(int value)
     {
