@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class StopAndGoServer : MonoBehaviour
 {
+
     YOMNetworkManager manager;
     ServerCalls sc;
     [SerializeField] GameObject redLight;
@@ -17,6 +18,7 @@ public class StopAndGoServer : MonoBehaviour
     [SerializeField] TransitionSize trans;
     [SerializeField] Transform[] spawnPos;
     [HideInInspector] public GameObject leader;
+    
     private void Awake()
     {
         manager = FindObjectOfType<YOMNetworkManager>();

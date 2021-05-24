@@ -22,7 +22,7 @@ public class HideAndSeekPlayer : MonoBehaviour
     {
         speed = speedStart;
         joystick = FindObjectOfType<Joystick>();
-        myPlayer = Instantiate(prefab);
+        myPlayer = Instantiate(prefab, this.transform);
         rb = myPlayer.GetComponent<Rigidbody>();
 
         //if (hasAuthority)
