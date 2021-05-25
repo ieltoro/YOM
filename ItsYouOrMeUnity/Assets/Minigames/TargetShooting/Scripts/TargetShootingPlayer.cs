@@ -8,11 +8,12 @@ public class TargetShootingPlayer : MonoBehaviour
     [SerializeField] GameObject prefab;
     Gyroscope m_Gyro;
     Quaternion changerot, targetRot, crot;
+    Vector3 aim;
     [SerializeField] float speed, lerpSpeed;
     [SerializeField] Image crosshair;
     float xSize, ySize;
-
-
+    float width, height;
+    Vector3 transf;
     // fixa 0,0,0,0 vid start
 
 
@@ -21,10 +22,11 @@ public class TargetShootingPlayer : MonoBehaviour
         //Instantiate(prefab, this.transform);
         m_Gyro = Input.gyro;
         m_Gyro.enabled = true;
-
+        print(Screen.width + "  -   " + Screen.height);
         xSize = Screen.width * 10f;
         ySize = Screen.height * 10f;
         StartCoroutine(StartCD());
+        print("-Screen.width / 2     " + -Screen.width / 2);
     }
 
     IEnumerator StartCD()
@@ -36,11 +38,15 @@ public class TargetShootingPlayer : MonoBehaviour
 
     void Update()
     {
-        //print(m_Gyro.rotationRate + " :Rot, " + m_Gyro.attitude + " :att");
+        //Vector3 v = m_Gyro.rotationRate;
+        //v = v * 2000 * Time.deltaTime;
+        //prefab.transform.localEulerAngles = v;
+
         crot = GetGyro();
-        print(crot + "    -  Calculated");
-        print(Input.gyro.attitude);
-        crosshair.rectTransform.localPosition = new Vector3(crot.z * xSize, crot.x * ySize, 0);
+        Vector3 pos = new Vector3(crot.z * xSize, crot.x * ySize, 0);
+        print(pos);
+        transf = pos;
+        crosshair.rectTransform.position = transf;
     }
 
     private Quaternion GetGyro()
@@ -54,14 +60,13 @@ public class TargetShootingPlayer : MonoBehaviour
         else
         {
             Quaternion q = new Quaternion( 0 , ( r.y - changerot.y ) , ( r.z + changerot.z ) , ( r.w + changerot.w ));
-            return new Quaternion(0f, 0, 0, 0.5f) * q * new Quaternion(0, 0, 1, 0);
+            return q * new Quaternion(0, 0, 1, 0);
         }
     }
     private Quaternion ReCenter()
     {
         Quaternion g = Input.gyro.attitude;
         Quaternion q = new Quaternion(-g.x, -g.y, -g.z, -g.w);
-        print(g + "    Old : New    " + q);
         return new Quaternion(-g.x, -g.y, -g.z, -g.w);
     }
 }
