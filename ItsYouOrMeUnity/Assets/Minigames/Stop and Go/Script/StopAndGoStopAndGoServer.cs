@@ -23,7 +23,7 @@ public class StopAndGoServer : MonoBehaviour
     {
         manager = FindObjectOfType<YOMNetworkManager>();
         sc = FindObjectOfType<ServerCalls>();
-        sc.ConnectedToMiniGame("Stop and Go");
+        sc.ConnectedToMiniGame(SceneManager.GetActiveScene().name);
         connectedText.text = "0/" + GameSaveHolder.gsh.players.Count;
         StartCoroutine(TransitionStart());
     }

@@ -14,7 +14,7 @@ public class HideAndSeekServer : MonoBehaviour
         ServerCalls.sc.ConnectedToMiniGame("InputPing");
     }
 
-    public void ConnectedToRed(GameObject p)
+    public void ConnectedToMiniGame(GameObject p)
     {
         print("Spawn player");
         manager.SpawnNewPlayer(p, 4);

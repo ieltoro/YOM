@@ -23,7 +23,7 @@ public class GameSaveHolder : MonoBehaviour
 
     public int round;
     public List<GameObject> players;
-    public int playersAlive;
+    public int playersAliveAndConnected;
     public GameObject leader;
     public List<PlayerSaveHolder> playerSaves; 
     public List<GameObject> resultsLastGame;
@@ -32,4 +32,5 @@ public class GameSaveHolder : MonoBehaviour
     {
         players.Remove(remove);
     }
+   
 }

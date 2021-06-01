@@ -272,13 +272,13 @@ public class PlayerScript : NetworkBehaviour
     [Command]
     void ConnectedToMinigame(int i)
     {
-        if(i == 0)// redlight
+        if(i == 0)// BattleShip
         {
-            FindObjectOfType<StopAndGoServer>().ConnectedToRed(this.gameObject);
+            FindObjectOfType<BattleshipServer>().ConnectedToMiniGame(this.gameObject);
         }
         if(i == 1)// PingTest
         {
-            FindObjectOfType<HideAndSeekServer>().ConnectedToRed(this.gameObject);
+            FindObjectOfType<HideAndSeekServer>().ConnectedToMiniGame(this.gameObject);
         }
     }
     public void AddVoteBalance(int add)
