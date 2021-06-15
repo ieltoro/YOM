@@ -25,15 +25,15 @@ public class MultiCamera : MonoBehaviour
         if(targets.Count > 0)
         {
             Move();
-            //Zoom();
+            Zoom();
         }
     }
 
-    //void Zoom()
-    //{
-    //    float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimiter);
-    //    cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, Time.deltaTime);
-    //}
+    void Zoom()
+    {
+        float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimiter);
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, Time.deltaTime);
+    }
 
     void Move()
     {
@@ -44,7 +44,7 @@ public class MultiCamera : MonoBehaviour
         {
             if (transform.position.x > newPosotion.x - 0.1f && transform.position.x < newPosotion.x + 0.1f)
             {
-                targets.Remove(targets[0]);
+                //targets.Remove(targets[0]);
             }
         }
         transform.position = Vector3.SmoothDamp(transform.position, newPosotion, ref velocity, smoothTime);

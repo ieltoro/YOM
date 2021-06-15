@@ -49,8 +49,10 @@ MonoBehaviour:
   canvas: {fileID: 5692347146649035253}
   myPlayer: {fileID: 0}
   rb: {fileID: 0}
-  speed: 2.5
+  speedStart: 0
   rotspeed: 5
+  runningTime: 10
+  fillIMG: {fileID: 0}
 --- !u!114 &423445878983870632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +152,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &6983392478173331141
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -114,7 +114,7 @@ public class LobbySetup : MonoBehaviour
         {
             g.GetComponent<PlayerScript>().SendInfoToLobby();
         }
-        save.playersAlive = save.players.Count;
+        save.playersAliveAndConnected = save.players.Count;
         sc = FindObjectOfType<ServerCalls>();
         sc.StartingGame();
         StartCoroutine(StartRoundTimer());

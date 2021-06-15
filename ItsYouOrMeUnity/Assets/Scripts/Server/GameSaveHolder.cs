@@ -25,7 +25,6 @@ public class GameSaveHolder : MonoBehaviour
     public List<GameObject> players;
     public int playersAliveAndConnected;
     public GameObject leader;
-    public List<PlayerSaveHolder> playerSaves; 
     public List<GameObject> resultsLastGame;
 
     public void ResetPlayerList(GameObject remove)

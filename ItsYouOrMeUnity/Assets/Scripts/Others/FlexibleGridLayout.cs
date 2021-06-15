@@ -20,7 +20,7 @@ public class FlexibleGridLayout : LayoutGroup
 
     public Vector2 cellSize, spacing;
     public bool fitX, fitY;
-
+    
     public override void CalculateLayoutInputHorizontal()
     {
         base.CalculateLayoutInputHorizontal();

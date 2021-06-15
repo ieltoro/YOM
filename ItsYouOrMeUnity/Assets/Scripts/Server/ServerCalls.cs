@@ -6,6 +6,8 @@ using Mirror;
 
 public class ServerCalls : NetworkBehaviour
 {
+    #region Setup and stuff
+
     public static ServerCalls sc;
     ClientGameSetup cgs;
 
@@ -39,6 +41,7 @@ public class ServerCalls : NetworkBehaviour
     {
         SceneManager.LoadScene("Game Phone");
     }
+  
     public void SendInfo(int value)
     {
         RPC_SendInfo(value);
@@ -59,7 +62,7 @@ public class ServerCalls : NetworkBehaviour
             cgs.ChangeUi(1);
         }
     }
-
+   
     public void SendMiniGames(string i1, string i2)
     {
         RPC_RecieveMiniGames(i1, i2);
@@ -69,7 +72,7 @@ public class ServerCalls : NetworkBehaviour
     {
         FindObjectOfType<ClientGameSetup>().StartMinigameVote(i1, i2);
     }
-
+   
     public void ConnectedToMiniGame(string miniG)
     {
         RecievedMiniGameNR(miniG);
@@ -80,6 +83,7 @@ public class ServerCalls : NetworkBehaviour
         string load = name + " Phone";
         SceneManager.LoadScene(load);
     }
+  
     public void ReturnFromMiniGame()
     {
         RPC_ReturnFromMiniGame();
@@ -89,5 +93,33 @@ public class ServerCalls : NetworkBehaviour
     {
         SceneManager.LoadScene("Game Phone");
     }
-    
+ 
+    #endregion
+
+    #region Minigames
+    #region Battleship
+
+    public void TimesOutToSetUpShips()
+    {
+        RPC_TimesOutToSetUpShips();
+    }
+    [ClientRpc]
+    void RPC_TimesOutToSetUpShips()
+    {
+        FindObjectOfType<BattleshipClient>().TimeIsOut();
+    }
+    public void TimeToBomb()
+    {
+        RPC_TimeToBomb();
+    }
+    [ClientRpc]
+    void RPC_TimeToBomb()
+    {
+        FindObjectOfType<BattleshipClient>().BombTime();
+    }
+
+    #endregion
+    #endregion
+
 }
+

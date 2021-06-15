@@ -354,7 +354,7 @@ public class GameSetup : MonoBehaviour
         votedmini++;
         voteCountText[i].text = miniGChoosen[i].ToString();
 
-        if (votedmini == save.playersAlive)
+        if (votedmini == save.playersAliveAndConnected)
         {
             time.CancelTimer();
             GetAndStartMiniGame();
@@ -406,7 +406,7 @@ public class GameSetup : MonoBehaviour
         votedmini++;
         voteCountText[i].text = miniGChoosen[i].ToString();
         
-        if (votedmini == save.playersAlive)
+        if (votedmini == save.playersAliveAndConnected)
         {
             time.CancelTimer();
             GetAndStartMiniGame();
