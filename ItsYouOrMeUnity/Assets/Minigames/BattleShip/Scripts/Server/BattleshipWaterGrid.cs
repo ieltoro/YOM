@@ -6,6 +6,7 @@ public class BattleshipWaterGrid : MonoBehaviour
 {
     [SerializeField] GameObject tilePref;
     [SerializeField] MultiCamera cam;
+    [SerializeField] BattleshipServer server;
     public List<GameObject> tiles;
     int x = 1;
     int y;
@@ -36,5 +37,6 @@ public class BattleshipWaterGrid : MonoBehaviour
                 tempTile.transform.position = new Vector3(xx * 5, 0.1f, yy * 5);
             }
         }
+        server.StartBattle(x,y);
     }
 }

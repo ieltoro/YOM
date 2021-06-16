@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 59982763}
   - component: {fileID: 59982762}
+  - component: {fileID: 59982764}
   m_Layer: 0
   m_Name: Script
   m_TagString: Untagged
@@ -152,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432377eb4dc93bb44aff90b9822268a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 0}
+  timer: {fileID: 59982764}
   players: []
   connectedText: {fileID: 0}
   grid: {fileID: 1640692270}
@@ -172,6 +173,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &59982764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59982761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0a64c32966f25489a494044c847379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bs: {fileID: 59982762}
 --- !u!1 &78841088
 GameObject:
   m_ObjectHideFlags: 0

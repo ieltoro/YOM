@@ -17,7 +17,7 @@ public class BattleshipServer : MonoBehaviour
     [SerializeField] GameObject shipPrefab;
     List<GameObject> ships;
     int pConnected;
-
+    int alive;
 
     void Start()
     {
@@ -34,6 +34,7 @@ public class BattleshipServer : MonoBehaviour
     }
     public void AllConnectedAndPressedStart()
     {
+        alive = pConnected;
         CalculateGrid();
     }
     #endregion
@@ -43,27 +44,46 @@ public class BattleshipServer : MonoBehaviour
     void CalculateGrid()
     {
         int i = players.Count * 8;
-        grid.SetSize(4*8);
+        grid.SetSize(i);
+
     }
-    public void TimeisOutSetup()
+    public void StartBattle(int x, int y)
     {
-        sc.TimesOutToSetUpShips();
+        sc.StartBattleship(x,y);
+        StartCoroutine(StartBattleCD());
+    }
+    IEnumerator StartBattleCD()
+    {
+        yield return new WaitForSeconds(1);
+        timer.StartPlaceShipTimer();
     }
     public void AssignBattleshipPositions(int ship1, float rot1, int ship2, float rot2, BattleshipPlayer ownerName)
     {
-        GameObject temp = Instantiate(shipPrefab);
-        ownerName.ship.Add(temp);
-        temp.GetComponent<Battleship>().SetInfo(ownerName);
-        ships.Add(temp);
+        GameObject temp1 = Instantiate(shipPrefab);
+        ownerName.ship.Add(temp1);
+        temp1.GetComponent<Battleship>().SetInfo(ownerName);
+        ships.Add(temp1);
+        temp1.transform.position = grid.tiles[ship1].transform.position;
+        temp1.transform.eulerAngles = new Vector3(0, rot1, 0);
+
+        GameObject temp2 = Instantiate(shipPrefab);
+        ownerName.ship.Add(temp2);
+        temp2.GetComponent<Battleship>().SetInfo(ownerName);
+        ships.Add(temp2);
+        temp2.transform.position = grid.tiles[ship2].transform.position;
+        temp2.transform.eulerAngles = new Vector3(0, rot2, 0);
     }
     public void AllHaveassigned()
     {
         timer.StopPlaceShipTimer();
         SetupBattlefield();
     }
+    public void TimeisOutSetup()
+    {
+        sc.TimesOutToSetUpShips();
+    }
     void SetupBattlefield()
     {
-
         sc.TimeToBomb();
     }
 
@@ -72,6 +92,15 @@ public class BattleshipServer : MonoBehaviour
         grid.tiles[tile].GetComponent<BattleshipTile>().bombed = true;
     }
 
+    public void PlayerIsOut(GameObject player)
+    {
+        GameSaveHolder.gsh.resultsLastGame.Add(player);
+        alive--;
+        if(alive == 0)
+        {
+            print("All is dead");
+        }
+    }
     #endregion
 
     public void ReturnFromGame()

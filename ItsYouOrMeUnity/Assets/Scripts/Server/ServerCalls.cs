@@ -99,6 +99,16 @@ public class ServerCalls : NetworkBehaviour
     #region Minigames
     #region Battleship
 
+
+    public void StartBattleship(int x, int y)
+    {
+        RPC_StartBattleship(x,y);
+    }
+    [ClientRpc]
+    void RPC_StartBattleship(int x, int y)
+    {
+        FindObjectOfType<BattleshipClient>().SetupGameboard(x,y);
+    }
     public void TimesOutToSetUpShips()
     {
         RPC_TimesOutToSetUpShips();

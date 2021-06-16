@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Tilefriend : MonoBehaviour
 {
-    [SerializeField] int pos;
+    [SerializeField] int[] pos;
     [SerializeField] BattleshipTileSelected parent;
+    int current;
+    public void Check()
+    {
+        current++;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("Collision");
+        
         if(collision.tag == "Tile")
         {
-            parent.CheckAround(pos, collision.GetComponent<BattleshipTileSelected>());
+            parent.CheckAround(pos[current-1], collision.GetComponent<BattleshipTileSelected>());
+            
         }
     }
 }

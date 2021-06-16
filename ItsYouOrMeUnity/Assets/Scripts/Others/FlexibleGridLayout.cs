@@ -50,7 +50,8 @@ public class FlexibleGridLayout : LayoutGroup
         float parentHeight = rectTransform.rect.height;
 
         float cellWidth = (parentWidth / (float)columns) - ((spacing.x / (float)columns) * (columns - 1)) - (padding.left / (float)columns) - (padding.right / (float)columns);
-        float cellHeight = (parentHeight / (float)rows) - ((spacing.y / (float)rows) * (rows - 1)) - (padding.top / (float)rows) - (padding.bottom / (float)rows);
+        float cellHeight = (parentWidth / (float)columns) - ((spacing.x / (float)columns) * (columns - 1)) - (padding.left / (float)columns) - (padding.right / (float)columns);
+        //float cellHeight = (parentHeight / (float)rows) - ((spacing.y / (float)rows) * (rows - 1)) - (padding.top / (float)rows) - (padding.bottom / (float)rows);
 
         cellSize.x = fitX ? cellWidth : cellSize.x;
         cellSize.y = fitY ? cellHeight : cellSize.y;
@@ -76,11 +77,9 @@ public class FlexibleGridLayout : LayoutGroup
     public override void CalculateLayoutInputVertical()
     {
     }
-
     public override void SetLayoutHorizontal()
     {
     }
-
     public override void SetLayoutVertical()
     {
     }

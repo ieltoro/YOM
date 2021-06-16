@@ -26,12 +26,16 @@ public class BattleshipPlayer : NetworkBehaviour
 
     #region Client
     BattleshipClient bc;
-    public string playerName;
+    public string playerID;
 
     void SetOwnerName()
     {
-        playerName = ClientSaveGame.csg.playerName;
-        CMD_SetOwnerName(playerName);
+        playerID = ClientSaveGame.csg.playerID;
+        CMD_SetOwnerName(playerID);
+    }
+    public void StartGame()
+    {
+        CMD_StartGame();
     }
     public void AssignShipPosition(int ship1, float rot1, int ship2, float rot2)
     {
@@ -48,12 +52,26 @@ public class BattleshipPlayer : NetworkBehaviour
 
     BattleshipServer bs;
     public List<GameObject> ship;
+    GameObject owner;
     public int attackTile;
     
     [Command]
     void CMD_SetOwnerName(string name)
     {
-        playerName = name;
+        playerID = name;
+        foreach(GameObject g in GameSaveHolder.gsh.players)
+        {
+            if(g.GetComponent<PlayerScript>().id == playerID)
+            {
+                owner = g;
+                return;
+            }
+        }
+    }
+    [Command]
+    void CMD_StartGame()
+    {
+        bs.AllConnectedAndPressedStart();
     }
     [Command]
     void CMD_AssignShipPosition(int ship1Pos, float rot1, int ship2Pos, float rot2)
@@ -65,11 +83,22 @@ public class BattleshipPlayer : NetworkBehaviour
     {
         bs.BombedATile(tile);
     }
-
     public void ShipSunken(GameObject s)
     {
         ship.Remove(s);
-
+        int i = new int();
+        foreach(GameObject g in ship)
+        {
+            if(g == null)
+            {
+                i++;
+                if( i == 2)
+                {
+                    print("Player is out");
+                    bs.PlayerIsOut(owner);
+                }
+            }
+        }
     }
     #endregion
 }
