@@ -15,16 +15,15 @@ public class BattleshipServer : MonoBehaviour
     [SerializeField] Text connectedText;
     [SerializeField] BattleshipWaterGrid grid;
     [SerializeField] GameObject shipPrefab;
-    List<GameObject> ships;
+    public List<GameObject> ships;
     int pConnected;
     int alive;
 
     void Start()
     {
-        CalculateGrid();
-        //manager = FindObjectOfType<YOMNetworkManager>();
-        //sc = FindObjectOfType<ServerCalls>();
-        //sc.ConnectedToMiniGame(SceneManager.GetActiveScene().name);
+        manager = FindObjectOfType<YOMNetworkManager>();
+        sc = FindObjectOfType<ServerCalls>();
+        sc.ConnectedToMiniGame(SceneManager.GetActiveScene().name);
     }
     public void ConnectedToMiniGame(GameObject p)
     {
@@ -44,7 +43,7 @@ public class BattleshipServer : MonoBehaviour
     void CalculateGrid()
     {
         int i = players.Count * 8;
-        grid.SetSize(i);
+        grid.SetSize(8*6);
 
     }
     public void StartBattle(int x, int y)
@@ -57,8 +56,10 @@ public class BattleshipServer : MonoBehaviour
         yield return new WaitForSeconds(1);
         timer.StartPlaceShipTimer();
     }
+    int assignedShip;
     public void AssignBattleshipPositions(int ship1, float rot1, int ship2, float rot2, BattleshipPlayer ownerName)
     {
+        assignedShip++;
         GameObject temp1 = Instantiate(shipPrefab);
         ownerName.ship.Add(temp1);
         temp1.GetComponent<Battleship>().SetInfo(ownerName);
@@ -72,18 +73,26 @@ public class BattleshipServer : MonoBehaviour
         ships.Add(temp2);
         temp2.transform.position = grid.tiles[ship2].transform.position;
         temp2.transform.eulerAngles = new Vector3(0, rot2, 0);
+        if(assignedShip == pConnected)
+        {
+            AllHaveassigned();
+        }
+
     }
+
     public void AllHaveassigned()
     {
         timer.StopPlaceShipTimer();
-        SetupBattlefield();
+        StartCoroutine(StartBattleRound());
     }
     public void TimeisOutSetup()
     {
         sc.TimesOutToSetUpShips();
     }
-    void SetupBattlefield()
+
+    IEnumerator StartBattleRound()
     {
+        yield return new WaitForSeconds(1);
         sc.TimeToBomb();
     }
 

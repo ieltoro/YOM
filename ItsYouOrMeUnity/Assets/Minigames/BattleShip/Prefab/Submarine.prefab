@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820aa7f360d825f44877a165f40a7c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 6007556274738735043}
 --- !u!1 &6245622959112484882
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820aa7f360d825f44877a165f40a7c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ship: {fileID: 0}
+  ship: {fileID: 6007556274738735043}
 --- !u!1 &8998504079903373191
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8998504079903373188}
+  - component: {fileID: 6007556274738735043}
   m_Layer: 0
   m_Name: Submarine
   m_TagString: Untagged
@@ -253,6 +254,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6007556274738735043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8998504079903373191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ff6906f6ddb0d40bead75fbe6b598b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  ship: {fileID: 7719326344083430797}
 --- !u!1001 &8998504078800240905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -340,6 +355,12 @@ PrefabInstance:
 --- !u!4 &8893380791346112226 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 907ef8accba60a14ab6dec6df9d87cb6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8998504078800240905}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7719326344083430797 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 907ef8accba60a14ab6dec6df9d87cb6,
     type: 3}
   m_PrefabInstance: {fileID: 8998504078800240905}
   m_PrefabAsset: {fileID: 0}

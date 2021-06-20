@@ -95,10 +95,8 @@ public class ServerCalls : NetworkBehaviour
     }
  
     #endregion
-
     #region Minigames
     #region Battleship
-
 
     public void StartBattleship(int x, int y)
     {
