@@ -10,7 +10,7 @@ public class BattleshipTile : MonoBehaviour
 
     public void HitThisTile()
     {
-
+        bombed = true;
     }
     public void ResetTile()
     {

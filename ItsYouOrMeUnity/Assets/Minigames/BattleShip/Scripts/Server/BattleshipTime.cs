@@ -14,16 +14,19 @@ public class BattleshipTime : MonoBehaviour
     }
     public void StopPlaceShipTimer()
     {
-        
+        StopAllCoroutines();
     }
     public void TimesOutPlaceShipTimer()
     {
         bs.TimeisOutSetup();
     }
-
     IEnumerator TimerPlace()
     {
-        yield return new WaitForSeconds(30);
+        for(int i = 90; i > 0; i--)
+        {
+            yield return new WaitForSeconds(90);
+            time.text = i.ToString();
+        }
         StopPlaceShipTimer();
     }
 }

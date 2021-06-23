@@ -22,17 +22,17 @@ public class BattleshipClient : MonoBehaviour
 
     void Start()
     {
+        print("are you ledaer?" + ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().leader);
         ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().MinigameConnectedTo(0);
         if (ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().leader)
         {
             ui[1].SetActive(true);
         }
     }
-
     public void SetupGameboard(int xSize, int ySize)
     {
-        gridScript.rows = xSize;
-        gridScript.columns = ySize;
+        gridScript.rows = ySize;
+        gridScript.columns = xSize;
         for(int i = (xSize * ySize); i > 0; i--)
         {
             GameObject g = Instantiate(tilesPrefab, gridScript.transform);
@@ -219,8 +219,8 @@ public class BattleshipClient : MonoBehaviour
     public void BombedThisTile(int tile)
     {
         print(tile);
-        player.BombedThisTile(tile);
         ChangeUi(0);
+        player.BombedThisTile(tile);
     }
 
     #endregion

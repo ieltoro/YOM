@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,10 +26,17 @@ public class LobbySetup : MonoBehaviour
     int playersReady;
 
     private void Start()
-    {       
+    {
+        print(SceneManager.GetActiveScene().name);
+        print(GetProjectName());
         StartCoroutine(StartCD());
     }
-
+    public string GetProjectName()
+    {
+        string[] s = Application.dataPath.Split('/');
+        string projectName = s[s.Length - 2];
+        return projectName;
+    }
     IEnumerator StartCD()
     {
         yield return new WaitForSeconds(1);
@@ -125,6 +133,6 @@ public class LobbySetup : MonoBehaviour
 
         yield return new WaitForSeconds(3);
         //SceneManager.LoadScene("Game");
-        SceneManager.LoadScene("InputPing");
+        SceneManager.LoadScene("Battleship");
     }
 }

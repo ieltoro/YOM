@@ -7,6 +7,7 @@ using Mirror;
 public class PlayerScript : NetworkBehaviour
 {
     //public static PlayerScript ps;
+    
     [SyncVar]
     public int playerNR;
     public string playerName;
@@ -64,7 +65,7 @@ public class PlayerScript : NetworkBehaviour
     }
 
     #region Client
-
+    [Header("Client")]
     ClientGameSetup cgs;
 
     #region Start
@@ -169,7 +170,7 @@ public class PlayerScript : NetworkBehaviour
 
 
     #region Server
-
+    [Header("Server")]
     LobbySetup ls;
     GameSetup gs;
     GameSaveHolder save;
@@ -270,13 +271,14 @@ public class PlayerScript : NetworkBehaviour
         gs.MinigameVotedFor(i);
     }
     [Command]
-    void ConnectedToMinigame(int i)
+    void ConnectedToMinigame(int nr)
     {
-        if(i == 0)// BattleShip
+        print("111111111");
+        if(nr == 0)// BattleShip
         {
             FindObjectOfType<BattleshipServer>().ConnectedToMiniGame(this.gameObject);
         }
-        if(i == 1)// PingTest
+        if(nr == 1)// PingTest
         {
             FindObjectOfType<HideAndSeekServer>().ConnectedToMiniGame(this.gameObject);
         }

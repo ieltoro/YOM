@@ -27,12 +27,14 @@ public class BattleshipServer : MonoBehaviour
     }
     public void ConnectedToMiniGame(GameObject p)
     {
+        print("0");
         manager.SpawnNewPlayer(p, 3);
         pConnected++;
-        connectedText.text = pConnected.ToString() + "/" + GameSaveHolder.gsh.playersAliveAndConnected;
+        //connectedText.text = pConnected.ToString() + "/" + GameSaveHolder.gsh.playersAliveAndConnected;
     }
     public void AllConnectedAndPressedStart()
     {
+        print("1");
         alive = pConnected;
         CalculateGrid();
     }
@@ -42,23 +44,27 @@ public class BattleshipServer : MonoBehaviour
 
     void CalculateGrid()
     {
+        print("2");
         int i = players.Count * 8;
         grid.SetSize(8*6);
 
     }
     public void StartBattle(int x, int y)
     {
+        print("3");
         sc.StartBattleship(x,y);
         StartCoroutine(StartBattleCD());
     }
     IEnumerator StartBattleCD()
     {
         yield return new WaitForSeconds(1);
+        print("4");
         timer.StartPlaceShipTimer();
     }
     int assignedShip;
     public void AssignBattleshipPositions(int ship1, float rot1, int ship2, float rot2, BattleshipPlayer ownerName)
     {
+        print("Assigend");
         assignedShip++;
         GameObject temp1 = Instantiate(shipPrefab);
         ownerName.ship.Add(temp1);
@@ -82,6 +88,7 @@ public class BattleshipServer : MonoBehaviour
 
     public void AllHaveassigned()
     {
+        print("5");
         timer.StopPlaceShipTimer();
         StartCoroutine(StartBattleRound());
     }
@@ -90,19 +97,38 @@ public class BattleshipServer : MonoBehaviour
         sc.TimesOutToSetUpShips();
     }
 
+
+    #region Bomb
     IEnumerator StartBattleRound()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
+        print("6");
         sc.TimeToBomb();
     }
-
+    
+    [Header("Bomb Part")]
+    public List<int> tilesBombed;
+    int peoplebombed;
     public void BombedATile(int tile)
     {
-        grid.tiles[tile].GetComponent<BattleshipTile>().bombed = true;
+        print("Bombed");
+        tilesBombed.Add(tile);
+        peoplebombed++;
+        if(peoplebombed == pConnected)
+        {
+            StartCoroutine(DisplayBombResults());
+        }
     }
 
+    IEnumerator DisplayBombResults()
+    {
+        yield return new WaitForSeconds(2);
+
+    }
+    #endregion
     public void PlayerIsOut(GameObject player)
     {
+        print("Player is out");
         GameSaveHolder.gsh.resultsLastGame.Add(player);
         alive--;
         if(alive == 0)

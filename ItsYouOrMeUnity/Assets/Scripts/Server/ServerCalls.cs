@@ -75,13 +75,14 @@ public class ServerCalls : NetworkBehaviour
    
     public void ConnectedToMiniGame(string miniG)
     {
+        print("1");
         RecievedMiniGameNR(miniG);
     }
     [ClientRpc]
     void RecievedMiniGameNR(string name)
     {
         string load = name + " Phone";
-        SceneManager.LoadScene(load);
+        FindObjectOfType<ClientLobby>().ChangeScene(load);
     }
   
     public void ReturnFromMiniGame()

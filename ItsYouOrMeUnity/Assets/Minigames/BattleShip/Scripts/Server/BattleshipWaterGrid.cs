@@ -34,7 +34,7 @@ public class BattleshipWaterGrid : MonoBehaviour
                 GameObject tempTile = Instantiate(tilePref, this.transform);
                 cam.targets.Add(tempTile.transform);
                 tiles.Add(tempTile);
-                tempTile.transform.position = new Vector3(xx * 5, 0.1f, yy * 5);
+                tempTile.transform.position = new Vector3(xx * 5, 0.1f, yy * -5);
             }
         }
         server.StartBattle(x,y);

@@ -5,28 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 95e0a554a7470a34dae2bd718bcf8812
-  - enabled: 0
-    path: Assets/Scenes/Game.unity
-    guid: c4f65f52782568f4e83d816a85a3700f
-  - enabled: 0
-    path: Assets/Minigames/Stop and Go/Stop and Go.unity
-    guid: 1c41bfd19bda17248b86ff4f65b370bf
   - enabled: 1
     path: Assets/Scenes/Phone/Lobby Phone.unity
     guid: 532509125f40ce7459ea3e8c287db1c8
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: c4f65f52782568f4e83d816a85a3700f
+  - enabled: 1
     path: Assets/Scenes/Phone/Game Phone.unity
     guid: 0f025bf8e01f303478388e4fcee92a40
-  - enabled: 0
-    path: Assets/Minigames/Stop and Go/Stop and Go Phone.unity
-    guid: b3855245813b2ba42b896ef2596a7e7a
-  - enabled: 0
-    path: Assets/Scenes/InputPing.unity
-    guid: 796862897b3ad4c469b4e5e53612a42f
   - enabled: 1
-    path: Assets/Minigames/Hide And Seek/InputPing Phone.unity
-    guid: 877909ae81f839544a3e0b9d16bd9543
+    path: Assets/Minigames/BattleShip/Battleship.unity
+    guid: 9ccf1cd5caed3fd4ab51308baedb419c
+  - enabled: 1
+    path: Assets/Minigames/BattleShip/Battleship Phone.unity
+    guid: d486ea75e7bb5794987239038617188b
   m_configObjects: {}

@@ -18,13 +18,19 @@ public class ClientLobby : MonoBehaviour
         if (PlayerPrefs.GetString("PlayerID") == null || PlayerPrefs.GetString("PlayerID") == "")
         {
             int r = (int)Random.Range(1, 9999999999);
-            PlayerPrefs.SetString("PlayerID", "ID" + r.ToString());
-            print(r);
+            //PlayerPrefs.SetString("PlayerID", "ID" + r.ToString());
+            PlayerPrefs.SetString("PlayerID", GetProjectName());
         }
+        PlayerPrefs.SetString("PlayerID", GetProjectName());
         ClientSaveGame.csg.playerID = PlayerPrefs.GetString("PlayerID");
         ClientSaveGame.csg.cosmetic = Random.Range(0, 5);
     }
-
+    public string GetProjectName()
+    {
+        string[] s = Application.dataPath.Split('/');
+        string projectName = s[s.Length - 2];
+        return projectName;
+    }
     public void LostConnection()
     {
         ChangeUi(0);
@@ -39,7 +45,7 @@ public class ClientLobby : MonoBehaviour
             print("Need a name");
             return;
         }
-        PlayerPrefs.SetString("PlayerID", "ID" + idInput.text);
+        PlayerPrefs.SetString("PlayerID", GetProjectName());
         ClientSaveGame.csg.playerID = PlayerPrefs.GetString("PlayerID");
         ChangeUi(1);
         ClientSaveGame.csg.playerName = ifNameplayer.text;
@@ -63,5 +69,10 @@ public class ClientLobby : MonoBehaviour
     {
         ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().PlayerReady();
         ChangeUi(3);
+    }
+    public void ChangeScene(string name)
+    {
+        print("Connected anc change to " + name);
+        SceneManager.LoadScene("Battleship Phone");
     }
 }

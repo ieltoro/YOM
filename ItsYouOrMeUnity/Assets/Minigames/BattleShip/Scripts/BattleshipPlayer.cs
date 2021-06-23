@@ -7,8 +7,7 @@ public class BattleshipPlayer : NetworkBehaviour
 {
     void Start()
     {
-
-        if (isLocalPlayer)
+        if (hasAuthority)
         {
             bc = FindObjectOfType<BattleshipClient>();
             bc.player = this;
@@ -22,6 +21,8 @@ public class BattleshipPlayer : NetworkBehaviour
             bs.players.Add(this);
             return;
         }
+
+        Destroy(this.gameObject);
     }
 
     #region Client
@@ -33,6 +34,7 @@ public class BattleshipPlayer : NetworkBehaviour
         playerID = ClientSaveGame.csg.playerID;
         CMD_SetOwnerName(playerID);
     }
+
     public void StartGame()
     {
         CMD_StartGame();
