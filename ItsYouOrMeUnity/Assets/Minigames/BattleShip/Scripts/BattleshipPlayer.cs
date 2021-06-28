@@ -21,7 +21,6 @@ public class BattleshipPlayer : NetworkBehaviour
             bs.players.Add(this);
             return;
         }
-
         Destroy(this.gameObject);
     }
 
