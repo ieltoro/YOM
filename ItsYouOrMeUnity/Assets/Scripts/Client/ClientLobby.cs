@@ -63,12 +63,8 @@ public class ClientLobby : MonoBehaviour
         {
             g.SetActive(false);
         }
-        canvas[nr].SetActive(true);
-    }
-    public void PlayerReady()
-    {
-        ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().PlayerReady();
-        ChangeUi(3);
+        if(nr > -1)
+            canvas[nr].SetActive(true);
     }
     public void ChangeScene(string name)
     {

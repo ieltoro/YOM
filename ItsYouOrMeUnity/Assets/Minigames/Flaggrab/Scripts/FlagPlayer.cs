@@ -20,12 +20,14 @@ public class FlagPlayer : NetworkBehaviour
             print("Is mine");
             FindObjectOfType<FlaggraberClient>().player = this;
             SetOwnerID();
+            return;
         }
         if (isServer)
         {
             print("IS Server");
             myPlayer = Instantiate(prefab);
             FindObjectOfType<FlaggraberManager>().players.Add(this);
+            return;
         }
         Destroy(gameObject);
     }
@@ -51,6 +53,7 @@ public class FlagPlayer : NetworkBehaviour
     {
         CMD_Jump();
     }
+
     #endregion
     #region Server
 
@@ -76,10 +79,12 @@ public class FlagPlayer : NetworkBehaviour
     {
         playerMove.UpdateInput(pos);
     }
+    [Command]
     void CMD_Sprinting(bool Answer)
     {
 
     }
+    [Command]
     void CMD_Jump()
     {
 

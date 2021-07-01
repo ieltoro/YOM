@@ -7,7 +7,8 @@ public class ClientStart : NetworkBehaviour
 {
     void Start()
     {
-        if(isLocalPlayer)
+        Screen.orientation = ScreenOrientation.Portrait;
+        if (isLocalPlayer)
         {
             gameObject.name = "My ClientStart";
             RPC_Connected(PlayerPrefs.GetString("PlayerID"));
@@ -45,7 +46,8 @@ public class ClientStart : NetworkBehaviour
         }
         else
         {
-            manager.SpawnNewPlayer(gameObject,2);
+            manager.SpawnNewPlayer(gameObject, 2);
+            manager.SpawnNewPlayer(gameObject, 3);
         }
     }
 }

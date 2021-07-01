@@ -18,11 +18,12 @@ public class LobbySetup : MonoBehaviour
     public GameObject hostLeader;
     public int starthp = 3;
 
+    public List<LobbyCharacter> players;
     public List<string> presidentCandidatesNames;
     private string namesPlaying;
     [SerializeField] Text namesListTxt;
+    [SerializeField] GameObject[] colliders;
 
-    [Header("Lobby / start")]
     int playersReady;
 
     private void Start()
@@ -40,7 +41,7 @@ public class LobbySetup : MonoBehaviour
     IEnumerator StartCD()
     {
         yield return new WaitForSeconds(1);
-        
+        trans.TransitionIn();
     }
     public void PressedSettings()
     {
@@ -54,6 +55,11 @@ public class LobbySetup : MonoBehaviour
     {
         startCanvas.SetActive(false);
         canvasHost.SetActive(true);
+    }
+    public void HostSucceded()
+    {
+        colliders[0].SetActive(true);
+        colliders[1].SetActive(true);
     }
     public void PressedHostLocal()
     {
@@ -69,6 +75,7 @@ public class LobbySetup : MonoBehaviour
     }
     public void PlayerJoinedLobby(string player)
     {
+        print("Add name " + player);
         presidentCandidatesNames.Add(player);
         namesPlaying = "";
         foreach (string s in presidentCandidatesNames)
@@ -111,6 +118,10 @@ public class LobbySetup : MonoBehaviour
     }
     public void PlayerReady()
     {
+        foreach(LobbyCharacter g in players)
+        {
+            g.character.StopMoving();
+        }
         manager.playing = true;
         StartGame();
     }
@@ -123,8 +134,7 @@ public class LobbySetup : MonoBehaviour
             g.GetComponent<PlayerScript>().SendInfoToLobby();
         }
         save.playersAliveAndConnected = save.players.Count;
-        sc = FindObjectOfType<ServerCalls>();
-        sc.StartingGame();
+        ServerCalls.sc.StartingGame();
         StartCoroutine(StartRoundTimer());
     }
     IEnumerator StartRoundTimer()
@@ -132,7 +142,6 @@ public class LobbySetup : MonoBehaviour
         trans.TransitionOut();
 
         yield return new WaitForSeconds(3);
-        //SceneManager.LoadScene("Game");
-        SceneManager.LoadScene("Battleship");
+        SceneManager.LoadScene("Game");
     }
 }

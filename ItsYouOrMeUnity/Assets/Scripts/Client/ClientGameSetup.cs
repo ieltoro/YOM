@@ -51,8 +51,6 @@ public class ClientGameSetup : MonoBehaviour
             return;
         }
         ChangeUi(0);
-
-        ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().SendVotes(i);
     }
 
     #endregion
@@ -68,7 +66,6 @@ public class ClientGameSetup : MonoBehaviour
     public void MinigameVoted(int i)
     {
         ChangeUi(0);
-        ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().MinigameIVotedfor(i);
     }
 
     #endregion
@@ -79,7 +76,7 @@ public class ClientGameSetup : MonoBehaviour
 
     public void PressedSend(PlayerScript reciever)
     {
-        reciever.SendMsg(chatInput.text, ClientSaveGame.csg.playerName);
+
     }
 
     #endregion

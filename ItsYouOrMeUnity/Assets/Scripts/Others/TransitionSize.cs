@@ -39,6 +39,7 @@ public class TransitionSize : MonoBehaviour
         background.SetActive(false);
         animate = true;
         this.enabled = true;
+        StartCoroutine(StopTransition());
     }
     public void TransitionOut()
     {
@@ -60,9 +61,11 @@ public class TransitionSize : MonoBehaviour
         animate = true;
         this.enabled = true;
     }
-    public void StopTransition()
+     IEnumerator StopTransition()
     {
+        yield return new WaitForSeconds(1.5f);
         animate = false;
+        circle.transform.gameObject.SetActive(false);
         this.enabled = false;
     }
     private void Update()

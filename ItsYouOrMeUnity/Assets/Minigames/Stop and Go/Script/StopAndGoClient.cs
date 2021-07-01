@@ -10,7 +10,6 @@ public class StopAndGoClient : MonoBehaviour
     void Start()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        FindObjectOfType<PlayerScript>().MinigameConnectedTo(0);
     }
     public void ChangeUI(int i)
     {

@@ -31,5 +31,10 @@ public class GameSaveHolder : MonoBehaviour
     {
         players.Remove(remove);
     }
-   
+    int pnr;
+    public int GetPNR()
+    {
+        pnr++;
+        return pnr;
+    }
 }

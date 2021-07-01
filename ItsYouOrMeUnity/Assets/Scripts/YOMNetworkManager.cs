@@ -34,6 +34,7 @@ public class YOMNetworkManager : NetworkManager
         NetworkServer.Spawn(networkpref);
         sc = networkpref.GetComponent<ServerCalls>();
         networkDiscovery.StartServer();
+        FindObjectOfType<LobbySetup>().HostSucceded();
     }
     public override void OnStopServer()
     {

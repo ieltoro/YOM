@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterGroundCheck : MonoBehaviour
 {
-    [SerializeField] PlayerMovement move;
+    [SerializeField] CharacterMovement move;
 
     private void OnTriggerStay(Collider other)
     {

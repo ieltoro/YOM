@@ -15,10 +15,7 @@ public class Timerhandler : MonoBehaviour
     }
     public void TimesOut()
     {
-        if (modeR == 0)
-            gs.TimesOutVote();
-        if (modeR == 1)
-            gs.TimesOutMiniGameVote();
+
     }
     public void CancelTimer()
     {

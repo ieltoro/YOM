@@ -34,12 +34,12 @@ public class ServerCalls : NetworkBehaviour
 
     public void StartingGame()
     {
-        //RPC_StartingGame("Stop and Go);
+        RPC_StartingGame("Game");
     }
     [ClientRpc]
     void RPC_StartingGame(string game)
     {
-        SceneManager.LoadScene("Game Phone");
+        SceneManager.LoadScene(game + " Phone");
     }
   
     public void SendInfo(int value)

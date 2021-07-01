@@ -23,7 +23,6 @@ public class BattleshipClient : MonoBehaviour
     void Start()
     {
         print("are you ledaer?" + ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().leader);
-        ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().MinigameConnectedTo(0);
         if (ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>().leader)
         {
             ui[1].SetActive(true);

@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class SpaceshipController : MonoBehaviour
 {
+    public MoonlandingPlayer owner;
     [SerializeField] Rigidbody rb;
-    public float speed;
-    public float torque;
+    [SerializeField] float speed;
+    [SerializeField] float torque;
     [SerializeField] ParticleSystem fireFX;
     [SerializeField] float time = 30;
     Vector2 inputJoystick;
-    
+    [SerializeField] float yValue, target;
+    bool up, down;
+    public Vector2 wind;
+    [SerializeField] RectTransform windArrow, arrowTarget;
+    public int score;
+
+    public void WindDirection(Vector2 dir)
+    {
+        wind = dir;
+        arrowTarget.position = new Vector2(arrowTarget.position.x + dir.x * 100, arrowTarget.position.y + dir.y * 100);
+        windArrow.LookAt(arrowTarget, transform.up);
+    }
 
     public void InputRecieved(Vector2 input)
     {
@@ -18,32 +30,26 @@ public class SpaceshipController : MonoBehaviour
     }
     private void Update()
     {
-        inputJoystick = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        inputJoystick.y = Mathf.Clamp(inputJoystick.y, -0.4f, 1);
-
         time -= Time.deltaTime;
     }
     private void FixedUpdate()
     {
-        //if (inputJoystick.y > 0.05)
-        //{
-        //    if (!fireFX.isPlaying)
-        //        fireFX.Play();
-        //}
-        //else
-        //{
-        //    fireFX.Stop();
-        //}
-        
         rb.AddForce(transform.up * inputJoystick.y * speed, ForceMode.Impulse);
         rb.AddTorque(-transform.forward * torque * inputJoystick.x);
+        rb.AddForce(wind, ForceMode.Impulse);
     }
     private void OnCollisionEnter(Collision collision)
     {
         rb.useGravity = true;
         float x = collision.relativeVelocity.x;
         float y = collision.relativeVelocity.y;
-        if(x < 0)
+        float angle = transform.localRotation.z * 100;
+
+        if (angle < 0)
+        {
+            angle *= -1;
+        }
+        if (x < 0)
         {
             x *= -1;
         }
@@ -51,7 +57,9 @@ public class SpaceshipController : MonoBehaviour
         {
             y *= -1;
         }
-        float score = 70 - ((x + y) * 10) + time;
-        print(collision.relativeVelocity + " score is " + score);
+
+
+        float scoref = 70 - ((x + y) * 10) - angle + time;
+        score = Mathf.RoundToInt(scoref);
     }
 }
