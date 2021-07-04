@@ -49,9 +49,16 @@ public class YOMNetworkManager : NetworkManager
         }
         if(playing)
         {
-            base.OnServerConnect(conn);
-            base.OnServerAddPlayer(conn);
-            //NetworkServer.SpawnObjects();
+            foreach(GameObject g in ClientSaveGame.csg.players)
+            {
+                if(conn == g.GetComponent<NetworkIdentity>().connectionToClient)
+                {
+                    base.OnServerConnect(conn);
+                    g.GetComponent<NetworkIdentity>().RemoveClientAuthority();
+                    g.GetComponent<NetworkIdentity>().AssignClientAuthority(conn);
+                    g.GetComponent<PlayerScript>().UpdateOwner();
+                }
+            }
         }
     }
     public override void OnServerDisconnect(NetworkConnection conn)

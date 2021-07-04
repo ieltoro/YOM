@@ -9,12 +9,15 @@ public class ClientGameSetup : MonoBehaviour
 
     [Tooltip("0 = Waiting \n 1 = Vote \n 2 = MinigameVote")]
     [SerializeField] GameObject[] canvas;
+    PlayerScript ps;
     public bool dead;
-
+    bool voted;
 
     private void Start()
     {
         manager = FindObjectOfType<YOMNetworkManager>();
+        ps = ClientSaveGame.csg.localPlayer.GetComponent<PlayerScript>();
+        balance = ps.votesBalance;
     }
 
     public void ChangeUi(int nr)
@@ -28,19 +31,26 @@ public class ClientGameSetup : MonoBehaviour
         canvas[nr].SetActive(true);
     }
 
+    public void EnableVote(bool a)
+    {
+        canvas[0].SetActive(false);
+        if (!voted)
+            canvas[1].SetActive(a);
+    }
+    public void EnableShop(bool a)
+    {
+        print("Shop " + a);
+        canvas[0].SetActive(false);
+    }
     #region Vote
 
     [Header("Vote")]
     public InputField voteinput;
     public Text balanceText;
     int balance;
-
-    public void VoteStart(int b)
+    public void UpdateBalance(int amount)
     {
-        voteinput.text = "0";
-        balance = b;
-        balanceText.text = balance.ToString();
-        ChangeUi(1);
+        balance = amount;
     }
     public void PressedVoteSubmit()
     {
@@ -50,7 +60,9 @@ public class ClientGameSetup : MonoBehaviour
             print("Cant use more balance then you have");
             return;
         }
-        ChangeUi(0);
+        voted = true;
+        canvas[1].SetActive(false);
+        ps.VotesCasted(i);
     }
 
     #endregion

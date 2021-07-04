@@ -9,8 +9,10 @@ public class CharacterGame : NetworkBehaviour
 
     [SerializeField] GameObject charPrefab;
     [SerializeField] CharacterMovement character;
+    [SerializeField] ClientGameSetup cgs;
     GameSetup gs;
     public string playerID;
+    public int votes;
     public GameObject owner;
 
     private void Start()
@@ -19,6 +21,7 @@ public class CharacterGame : NetworkBehaviour
         {
             FindObjectOfType<CharacterGameClient>().player = this;
             SetOwnerID();
+            cgs = FindObjectOfType<ClientGameSetup>();
             return;
         }
         if (isServer)
@@ -27,11 +30,18 @@ public class CharacterGame : NetworkBehaviour
             Transform pos = gs.GetSpawnPos();
             transform.position = pos.position;
             transform.rotation = pos.rotation;
-            GameObject temp = Instantiate(charPrefab, this.transform);
+            GameObject temp = Instantiate(charPrefab, transform);
             character = temp.GetComponent<CharacterMovement>();
             character.owner = gameObject;
             FindObjectOfType<GameSetup>().players.Add(gameObject);
             StartCharacterMovement();
+            foreach(GameObject g in GameSaveHolder.gsh.players)
+            {
+                if(g.GetComponent<NetworkIdentity>().connectionToClient == connectionToClient)
+                {
+                    g.GetComponent<PlayerScript>().currentChild = gameObject;
+                }
+            }
             return;
         }
         Destroy(gameObject);
@@ -72,6 +82,16 @@ public class CharacterGame : NetworkBehaviour
         CMD_Jump();
     }
 
+    [TargetRpc]
+    void RPC_EnteredVote(bool b)
+    {
+        cgs.EnableVote(b);
+    }
+    [TargetRpc]
+    void RPC_EnteredStore(bool b)
+    {
+        cgs.EnableShop(b);
+    }
     #endregion
     #region Server
 
@@ -91,7 +111,14 @@ public class CharacterGame : NetworkBehaviour
     {
         RPC_StartCharacterMovement();
     }
-
+    public void EnteredVote(bool b)
+    {
+        RPC_EnteredVote(b);
+    }
+    public void EnteredStore(bool b)
+    {
+        RPC_EnteredStore(b);
+    }
     #endregion
     #endregion
 }

@@ -12,7 +12,7 @@ public class CharacterGameClient : MonoBehaviour
 
     public void StartController(bool answer)
     {
-        print("Activeate");
+        print("Activate");
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         canvas.SetActive(answer);
         this.enabled = answer;

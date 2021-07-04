@@ -7,12 +7,20 @@ public class ClientStart : NetworkBehaviour
 {
     void Start()
     {
-        Screen.orientation = ScreenOrientation.Portrait;
+       
+        //Screen.orientation = ScreenOrientation.Portrait;
         if (isLocalPlayer)
         {
             gameObject.name = "My ClientStart";
             RPC_Connected(PlayerPrefs.GetString("PlayerID"));
             manager = FindObjectOfType<YOMNetworkManager>();
+        }
+        if(isServer)
+        {
+            print("1  - " + GetComponent<NetworkIdentity>().connectionToClient.connectionId);
+            print("2  - " + GetComponent<NetworkIdentity>().connectionToClient.identity);
+            print("3  - " + GetComponent<NetworkIdentity>().connectionToClient.authenticationData);
+            print("4  - " + GetComponent<NetworkIdentity>().connectionToClient.isReady);
         }
         if (!isLocalPlayer && !isServer)
             Destroy(gameObject);

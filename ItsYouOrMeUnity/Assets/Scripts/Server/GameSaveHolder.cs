@@ -37,4 +37,16 @@ public class GameSaveHolder : MonoBehaviour
         pnr++;
         return pnr;
     }
+    public void UpdateAliveAndConnected()
+    {
+        playersAliveAndConnected = 0;
+        foreach (GameObject g in GameSaveHolder.gsh.players)
+        {
+            PlayerScript temp = g.GetComponent<PlayerScript>();
+            if(temp.connected ||temp.hp > 0)
+            {
+                playersAliveAndConnected++;
+            }
+        }
+    }
 }

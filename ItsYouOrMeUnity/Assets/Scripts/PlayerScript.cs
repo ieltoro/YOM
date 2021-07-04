@@ -7,7 +7,7 @@ using Mirror;
 public class PlayerScript : NetworkBehaviour
 {
     //public static PlayerScript ps;
-    
+    YOMNetworkManager manager;
     [SyncVar]
     public int playerNR;
     public string playerName;
@@ -42,6 +42,8 @@ public class PlayerScript : NetworkBehaviour
         }
         if (isServer)
         {
+            manager = FindObjectOfType<YOMNetworkManager>();
+            manager.SpawnNewPlayer(gameObject, 1);
             playerNR = GameSaveHolder.gsh.GetPNR();
             GameSaveHolder.gsh.players.Add(this.gameObject);
             if (GameSaveHolder.gsh.leader == null)
@@ -83,7 +85,17 @@ public class PlayerScript : NetworkBehaviour
         string load = scene + " Phone";
         SceneManager.LoadScene(load);
     }
-
+    [TargetRpc]
+    void RPC_UpdateAmountsBalanceOnClients(int amount)
+    {
+        votesBalance = amount;
+        
+    }
+    public void VotesCasted(int amount)
+    {
+        votesBalance -= amount;
+        CMD_VotesCasted(amount);
+    }
     #endregion
 
 
@@ -91,6 +103,7 @@ public class PlayerScript : NetworkBehaviour
 
 
     #region Server
+    public GameObject currentChild;
     public void AssignAsLeader()
     {
         RPC_AssignLeader();
@@ -101,6 +114,10 @@ public class PlayerScript : NetworkBehaviour
     }
     public void UpdateOwner()
     {
+        if(connected == false)
+        {
+            GameSaveHolder.gsh.playersAliveAndConnected++;
+        }
         connected = true;
         string sceneName = SceneManager.GetActiveScene().name;
         RPC_UpdateOwner(leader, sceneName);
@@ -118,6 +135,19 @@ public class PlayerScript : NetworkBehaviour
         characterCosmetics = cosmeticNr;
         this.gameObject.name = pname + "Prefab";
         FindObjectOfType<LobbySetup>().PlayerJoinedLobby(pname);
+    }
+
+    public void UpdateAmountsBalanceOnClients()
+    {
+        RPC_UpdateAmountsBalanceOnClients(votesBalance);
+    }
+    [Command]
+    void CMD_VotesCasted(int amount)
+    {
+        votesAmount = amount;
+        votesBalance -= votesAmount;
+        currentChild.GetComponent<CharacterGame>().votes = amount;
+        FindObjectOfType<GameSetup>().PlayerHaveVoted();
     }
     #endregion
 

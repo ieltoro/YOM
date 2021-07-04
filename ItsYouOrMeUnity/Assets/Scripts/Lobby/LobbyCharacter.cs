@@ -26,6 +26,10 @@ public class LobbyCharacter : NetworkBehaviour
             character = temp.GetComponent<CharacterMovement>();
             character.owner = gameObject;
             FindObjectOfType<LobbySetup>().players.Add(this);
+            print("1  - " + GetComponent<NetworkIdentity>().connectionToClient.connectionId);
+            print("2  - " + GetComponent<NetworkIdentity>().connectionToClient.identity);
+            print("3  - " + GetComponent<NetworkIdentity>().connectionToClient.authenticationData);
+            print("4  - " + GetComponent<NetworkIdentity>().connectionToClient.isReady);
             return;
         }
 
