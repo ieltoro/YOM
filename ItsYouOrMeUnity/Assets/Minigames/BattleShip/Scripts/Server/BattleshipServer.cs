@@ -23,7 +23,7 @@ public class BattleshipServer : MonoBehaviour
     {
         manager = FindObjectOfType<YOMNetworkManager>();
         sc = FindObjectOfType<ServerCalls>();
-        sc.ConnectedToMiniGame(SceneManager.GetActiveScene().name);
+        sc.ChangeScene(SceneManager.GetActiveScene().name);
     }
     public void ConnectedToMiniGame(GameObject p)
     {

@@ -32,9 +32,9 @@ public class ServerCalls : NetworkBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void StartingGame()
+    public void ChangeScene(string load)
     {
-        RPC_StartingGame("Game");
+        RPC_StartingGame(load);
     }
     [ClientRpc]
     void RPC_StartingGame(string game)
@@ -65,26 +65,16 @@ public class ServerCalls : NetworkBehaviour
    
     public void SendMiniGames(string i1, string i2)
     {
+        print("1");
         RPC_RecieveMiniGames(i1, i2);
     }
     [ClientRpc]
     void RPC_RecieveMiniGames(string i1, string i2)
     {
+        print("2");
         FindObjectOfType<ClientGameSetup>().StartMinigameVote(i1, i2);
     }
-   
-    public void ConnectedToMiniGame(string miniG)
-    {
-        print("1");
-        RecievedMiniGameNR(miniG);
-    }
-    [ClientRpc]
-    void RecievedMiniGameNR(string name)
-    {
-        string load = name + " Phone";
-        FindObjectOfType<ClientLobby>().ChangeScene(load);
-    }
-  
+     
     public void ReturnFromMiniGame()
     {
         RPC_ReturnFromMiniGame();

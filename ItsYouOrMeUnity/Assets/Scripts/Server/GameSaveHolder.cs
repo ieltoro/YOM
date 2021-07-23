@@ -37,6 +37,11 @@ public class GameSaveHolder : MonoBehaviour
         pnr++;
         return pnr;
     }
+    public void PlayerConnected(GameObject obj)
+    {
+        players.Add(obj);
+        playersAliveAndConnected++;
+    }
     public void UpdateAliveAndConnected()
     {
         playersAliveAndConnected = 0;

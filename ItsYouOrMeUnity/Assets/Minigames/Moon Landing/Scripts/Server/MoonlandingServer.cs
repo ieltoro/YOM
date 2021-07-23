@@ -18,12 +18,18 @@ public class MoonlandingServer : MonoBehaviour
     {
         manager = FindObjectOfType<YOMNetworkManager>();
         sc = FindObjectOfType<ServerCalls>();
-        sc.ConnectedToMiniGame(SceneManager.GetActiveScene().name);
+        sc.ChangeScene(SceneManager.GetActiveScene().name);
+
+        foreach (GameObject g in GameSaveHolder.gsh.players)
+        {
+            if (g.GetComponent<PlayerScript>().connected && g.GetComponent<PlayerScript>().hp > 0)
+                YOMNetworkManager.manager.SpawnNewPlayer(g, 3);
+        }
     }
-    public void ConnectedToMiniGame(GameObject p)
+    public void ConnectedToMiniGame(MoonlandingPlayer p)
     {
-        manager.SpawnNewPlayer(p, 4);
         pConnected++;
+        players.Add(p);
         connectedText.text = pConnected.ToString() + "/" + GameSaveHolder.gsh.playersAliveAndConnected;
         if (pConnected == GameSaveHolder.gsh.playersAliveAndConnected)
         {
@@ -41,12 +47,25 @@ public class MoonlandingServer : MonoBehaviour
 
     public void SetupPlayarea()
     {
-
+        windDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
     }
-
-    void Update()
+    public void StartFlying()
     {
-
+        foreach(MoonlandingPlayer g in players)
+        {
+            g.StartFlying();
+        }
+        StartCoroutine(StartGameCD());
+    }
+    IEnumerator StartGameCD()
+    {
+        print("3");
+        yield return new WaitForSeconds(1);
+        print("2");
+        yield return new WaitForSeconds(1);
+        print("1");
+        yield return new WaitForSeconds(1);
+        print("0");
     }
     #endregion
 }

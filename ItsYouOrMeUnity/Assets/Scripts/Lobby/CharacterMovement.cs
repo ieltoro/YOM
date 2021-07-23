@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Animations;
+using UnityEngine.Animations.Rigging;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -25,8 +27,12 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] Animator anim;
-    bool walking;
     float xposA, yposA, speedW;
+
+    private void Start()
+    {
+        GetComponentInChildren<RigBuilder>().enabled = true;
+    }
 
     public void UpdateInput(Vector2 inputR)
     {

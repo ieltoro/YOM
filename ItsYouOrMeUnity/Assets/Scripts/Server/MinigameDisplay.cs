@@ -14,4 +14,5 @@ public class MinigameDisplay : MonoBehaviour
         img.sprite = mini.sprite;
         text.text = mini.nameMinigame;
     }
+
 }

@@ -45,7 +45,7 @@ public class PlayerScript : NetworkBehaviour
             manager = FindObjectOfType<YOMNetworkManager>();
             manager.SpawnNewPlayer(gameObject, 1);
             playerNR = GameSaveHolder.gsh.GetPNR();
-            GameSaveHolder.gsh.players.Add(this.gameObject);
+            GameSaveHolder.gsh.PlayerConnected(this.gameObject);
             if (GameSaveHolder.gsh.leader == null)
             {
                 RPC_AssignLeader();
@@ -96,6 +96,7 @@ public class PlayerScript : NetworkBehaviour
         votesBalance -= amount;
         CMD_VotesCasted(amount);
     }
+
     #endregion
 
 
@@ -149,6 +150,7 @@ public class PlayerScript : NetworkBehaviour
         currentChild.GetComponent<CharacterGame>().votes = amount;
         FindObjectOfType<GameSetup>().PlayerHaveVoted();
     }
+
     #endregion
 
 }

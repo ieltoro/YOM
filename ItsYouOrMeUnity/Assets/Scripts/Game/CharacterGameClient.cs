@@ -32,4 +32,8 @@ public class CharacterGameClient : MonoBehaviour
     {
         player.Jump();
     }
+    public void EnableUI(bool a)
+    {
+        canvas.SetActive(a);
+    }
 }

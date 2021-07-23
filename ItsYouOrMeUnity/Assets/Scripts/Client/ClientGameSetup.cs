@@ -7,8 +7,10 @@ public class ClientGameSetup : MonoBehaviour
 {
     YOMNetworkManager manager;
 
-    [Tooltip("0 = Waiting \n 1 = Vote \n 2 = MinigameVote")]
+    [Tooltip("0 = Waiting \n 1 = Vote \n 2 = Shop  \n 3 = MinigameVote")]
     [SerializeField] GameObject[] canvas;
+    [SerializeField] CharacterGameClient cgc;
+    public CharacterGame cg;
     PlayerScript ps;
     public bool dead;
     bool voted;
@@ -41,6 +43,7 @@ public class ClientGameSetup : MonoBehaviour
     {
         print("Shop " + a);
         canvas[0].SetActive(false);
+        canvas[2].SetActive(a);
     }
     #region Vote
 
@@ -71,13 +74,16 @@ public class ClientGameSetup : MonoBehaviour
     [SerializeField] Text miniText1, miniText2;
     public void StartMinigameVote(string c1, string c2)
     {
+        print("3");
         miniText1.text = c1;
         miniText2.text = c2;
-        ChangeUi(2);
+        cgc.EnableUI(false);
+        ChangeUi(3);
     }
     public void MinigameVoted(int i)
     {
         ChangeUi(0);
+        cg.VotedMinigame(i);
     }
 
     #endregion

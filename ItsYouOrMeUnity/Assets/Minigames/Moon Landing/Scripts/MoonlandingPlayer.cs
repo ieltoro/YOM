@@ -7,6 +7,7 @@ public class MoonlandingPlayer : NetworkBehaviour
 {
     [SerializeField] GameObject spaceshipPrefab;
     [SerializeField] SpaceshipController mySpaceShip;
+    [SerializeField] MoonlandingClient client;
     public string playerID;
 
     private void Start()
@@ -14,7 +15,8 @@ public class MoonlandingPlayer : NetworkBehaviour
         if (hasAuthority)
         {
             print("Is mine");
-            FindObjectOfType<MoonlandingClient>().player = this;
+            client = FindObjectOfType<MoonlandingClient>();
+            client.player = this;
             SetOwnerID();
             return;
         }
@@ -24,7 +26,7 @@ public class MoonlandingPlayer : NetworkBehaviour
             GameObject temp = Instantiate(spaceshipPrefab);
             mySpaceShip = temp.GetComponent<SpaceshipController>();
             mySpaceShip.owner = this;
-            FindObjectOfType<MoonlandingServer>().players.Add(this);
+            FindObjectOfType<MoonlandingServer>().ConnectedToMiniGame(this);
             return;
         }
         Destroy(gameObject);
@@ -36,6 +38,11 @@ public class MoonlandingPlayer : NetworkBehaviour
         playerID = ClientSaveGame.csg.playerID;
         CMD_SetOwnerName(playerID);
     }
+    [TargetRpc]
+    void RPC_StartFlying(bool answer)
+    {
+        client.StartFlying(answer);
+    }
     public void RecievedInput(Vector2 input)
     {
         CMD_RecievedInput(input);
@@ -44,7 +51,16 @@ public class MoonlandingPlayer : NetworkBehaviour
     #endregion
     #region Server
     public GameObject owner;
-    
+    public void StartFlying()
+    {
+        RPC_StartFlying(true);
+        mySpaceShip.enabled = true;
+        StartCoroutine(StartCD());
+    }
+    IEnumerator StartCD()
+    {
+        yield return new WaitForSeconds(2);
+    }
     [Command]
     void CMD_SetOwnerName(string pID)
     {

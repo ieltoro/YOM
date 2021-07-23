@@ -11,7 +11,7 @@ public class HideAndSeekServer : MonoBehaviour
     void Start()
     {
         manager = FindObjectOfType<YOMNetworkManager>();
-        ServerCalls.sc.ConnectedToMiniGame("InputPing");
+        ServerCalls.sc.ChangeScene("InputPing");
     }
 
     public void ConnectedToMiniGame(GameObject p)

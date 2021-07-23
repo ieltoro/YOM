@@ -17,7 +17,7 @@ public class SpaceshipController : MonoBehaviour
     [SerializeField] RectTransform windArrow, arrowTarget;
     public int score;
 
-    public void WindDirection(Vector2 dir)
+    public void StartFlying(Vector2 dir)
     {
         wind = dir;
         arrowTarget.position = new Vector2(arrowTarget.position.x + dir.x * 100, arrowTarget.position.y + dir.y * 100);
@@ -34,8 +34,12 @@ public class SpaceshipController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.AddForce(transform.up * inputJoystick.y * speed, ForceMode.Impulse);
-        rb.AddTorque(-transform.forward * torque * inputJoystick.x);
+        Vector2 inputTest = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        //rb.AddForce(transform.up * inputJoystick.y * speed, ForceMode.Impulse);
+        //rb.AddTorque(-transform.forward * torque * inputJoystick.x);
+        rb.AddForce(transform.up * Input.GetAxis("Vertical") * speed, ForceMode.Impulse);
+        rb.AddTorque(-transform.forward * torque * Input.GetAxis("Horizontal"));
+
         rb.AddForce(wind, ForceMode.Impulse);
     }
     private void OnCollisionEnter(Collision collision)
@@ -60,6 +64,8 @@ public class SpaceshipController : MonoBehaviour
 
 
         float scoref = 70 - ((x + y) * 10) - angle + time;
+
         score = Mathf.RoundToInt(scoref);
+        print(score + " = total score , " + angle + " = the angle , " + x + " = the x colision , " + y + " the y Colision , " + ((x + y) * 10) + "= the amount of them togheter");
     }
 }

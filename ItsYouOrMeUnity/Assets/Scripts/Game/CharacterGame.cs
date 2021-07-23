@@ -8,7 +8,7 @@ public class CharacterGame : NetworkBehaviour
     #region Setup
 
     [SerializeField] GameObject charPrefab;
-    [SerializeField] CharacterMovement character;
+    public CharacterMovement character;
     [SerializeField] ClientGameSetup cgs;
     GameSetup gs;
     public string playerID;
@@ -22,6 +22,7 @@ public class CharacterGame : NetworkBehaviour
             FindObjectOfType<CharacterGameClient>().player = this;
             SetOwnerID();
             cgs = FindObjectOfType<ClientGameSetup>();
+            cgs.cg = this;
             return;
         }
         if (isServer)
@@ -32,8 +33,9 @@ public class CharacterGame : NetworkBehaviour
             transform.rotation = pos.rotation;
             GameObject temp = Instantiate(charPrefab, transform);
             character = temp.GetComponent<CharacterMovement>();
+            character.enabled = true;
             character.owner = gameObject;
-            FindObjectOfType<GameSetup>().players.Add(gameObject);
+            FindObjectOfType<GameSetup>().Addplayer(this);
             StartCharacterMovement();
             foreach(GameObject g in GameSaveHolder.gsh.players)
             {
@@ -92,6 +94,14 @@ public class CharacterGame : NetworkBehaviour
     {
         cgs.EnableShop(b);
     }
+
+    #region minigame
+    public void VotedMinigame(int nr)
+    {
+        CMD_VotedMinigame(nr);
+    }
+
+    #endregion
     #endregion
     #region Server
 
@@ -119,6 +129,16 @@ public class CharacterGame : NetworkBehaviour
     {
         RPC_EnteredStore(b);
     }
+
+    #endregion
+    #region minigame
+
+    [Command]
+    void CMD_VotedMinigame(int nr)
+    {
+        gs.VotedMinigame(nr);
+    }
+    
     #endregion
     #endregion
 }

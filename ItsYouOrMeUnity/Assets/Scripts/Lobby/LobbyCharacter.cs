@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.Networking;
 
 public class LobbyCharacter : NetworkBehaviour
 {
@@ -21,20 +22,22 @@ public class LobbyCharacter : NetworkBehaviour
         }
         if (isServer)
         {
-            print("IS Server");
             GameObject temp = Instantiate(charPrefab, this.transform);
             character = temp.GetComponent<CharacterMovement>();
+            character.enabled = true;
             character.owner = gameObject;
             FindObjectOfType<LobbySetup>().players.Add(this);
             print("1  - " + GetComponent<NetworkIdentity>().connectionToClient.connectionId);
             print("2  - " + GetComponent<NetworkIdentity>().connectionToClient.identity);
             print("3  - " + GetComponent<NetworkIdentity>().connectionToClient.authenticationData);
             print("4  - " + GetComponent<NetworkIdentity>().connectionToClient.isReady);
+            print("5  - " + GetComponent<NetworkConnection>().connectionId);
             return;
         }
 
         Destroy(gameObject);
     }
+
     public GameObject owner;
   
     void SetOwnerID()
@@ -74,6 +77,7 @@ public class LobbyCharacter : NetworkBehaviour
     void CMD_Jump()
     {
         character.Jumping();
+        print("Jump MS  - " + GetComponent<NetworkIdentity>().connectionToClient.lastMessageTime);
     }
 
 }
