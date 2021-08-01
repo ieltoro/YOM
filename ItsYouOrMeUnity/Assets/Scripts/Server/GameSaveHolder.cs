@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameSaveHolder : MonoBehaviour
 {
     public static GameSaveHolder gsh;
+    public List<Minigames> minigames;
+
     private void Awake()
     {
         if (GameSaveHolder.gsh == null)

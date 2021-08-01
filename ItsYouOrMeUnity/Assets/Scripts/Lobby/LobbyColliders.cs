@@ -41,10 +41,11 @@ public class LobbyColliders : MonoBehaviour
         if(minigame)
         {
             print("Launch minigame");
+            ls.PlayersReady(1);
         }
         else
         {
-            ls.PlayerReady();
+            ls.PlayersReady(0);
             print("Start Game");
         }
     }

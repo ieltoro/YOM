@@ -32,7 +32,7 @@ Properties
     [Header(Tesselation)][Space]
     _TessMinDist("Tesselation Min Distance", Range(0.1, 50)) = 1.0
     _TessMaxDist("Tesselation Max Distance", Range(0.1, 50)) = 10.0
-    _TessFactor("Tessellation Factor", Range(1, 10)) = 5
+    _TessFactor("Tessellation Factor", Range(1, 100)) = 5
 
     [Header(Lighting)][Space]
     _RimLightPower("Rim Light Power", Range(1.0, 20.0)) = 6.0

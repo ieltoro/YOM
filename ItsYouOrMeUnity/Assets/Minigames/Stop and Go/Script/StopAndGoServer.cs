@@ -99,7 +99,7 @@ public class StopAndGoServer : MonoBehaviour
     public void ReturnFromGame()
     {
         GameSaveHolder.gsh.resultsLastGame.Add(GameSaveHolder.gsh.players[0]);
-        ServerCalls.sc.ReturnFromMiniGame();
+        ServerCalls.sc.ReturnFromMiniGame(manager.gamemode);
         SceneManager.LoadScene("Game");
     }
 }

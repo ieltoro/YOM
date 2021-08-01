@@ -75,14 +75,18 @@ public class ServerCalls : NetworkBehaviour
         FindObjectOfType<ClientGameSetup>().StartMinigameVote(i1, i2);
     }
      
-    public void ReturnFromMiniGame()
+    public void ReturnFromMiniGame(int mode)
     {
-        RPC_ReturnFromMiniGame();
+        RPC_ReturnFromMiniGame(mode);
     }
     [ClientRpc]
-    void RPC_ReturnFromMiniGame()
+    void RPC_ReturnFromMiniGame(int mode)
     {
-        SceneManager.LoadScene("Game Phone");
+        if(mode == 0)
+        {
+            SceneManager.LoadScene("Game Phone");
+        }
+        
     }
  
     #endregion

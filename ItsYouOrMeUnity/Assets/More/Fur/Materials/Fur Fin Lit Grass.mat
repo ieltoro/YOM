@@ -21,7 +21,7 @@ Material:
     m_TexEnvs:
     - _BaseMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 3, y: 3}
+        m_Scale: {x: 30, y: 30}
         m_Offset: {x: 0, y: 0}
     - _FurMap:
         m_Texture: {fileID: 2800000, guid: 06a14a1f370dddc4d852be45219dc8fc, type: 3}
@@ -33,28 +33,28 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaCutout: 0.22
+    - _AlphaCutout: 0.202
     - _AppendMoreFins: 0
-    - _Density: 7.63
+    - _Density: 3.82
     - _DrawOrigPolygon: 1
-    - _FaceNormalFactor: 0.23
+    - _FaceNormalFactor: 0.351
     - _FaceViewProdThresh: 1
-    - _FinJointNum: 7
-    - _FinLength: 0.415
+    - _FinJointNum: 6
+    - _FinLength: 0.603
     - _Metallic: 0
     - _NormalFactor: 0.196
-    - _NormalScale: 0.642
-    - _Occlusion: 1
-    - _RandomDirection: 0.404
+    - _NormalScale: 1.092
+    - _Occlusion: 0.844
+    - _RandomDirection: 1
     - _RimLightIntensity: 0.871
     - _RimLightPower: 3.58
     - _ShadowExtraBias: -0.233
     - _Smoothness: 0.637
-    - _TessFactor: 10
+    - _TessFactor: 25.2
     - _TessMaxDist: 41.9
-    - _TessMinDist: 3.2
+    - _TessMinDist: 0.1
     m_Colors:
-    - _AmbientColor: {r: 0.037320513, g: 0.09325546, b: 0.16037738, a: 1}
+    - _AmbientColor: {r: 0.010234945, g: 0.031688627, b: 0.14150941, a: 1}
     - _BaseColor: {r: 0.31509617, g: 0.5377358, b: 0.21644709, a: 1}
     - _BaseMove: {r: 0, g: -0.4, b: 0, a: 3}
     - _WindFreq: {r: 1, g: 0.4, b: 0.2, a: 1}

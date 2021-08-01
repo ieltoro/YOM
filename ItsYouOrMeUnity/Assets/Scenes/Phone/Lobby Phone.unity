@@ -2314,10 +2314,12 @@ MonoBehaviour:
   - {fileID: 595686231292977534, guid: a74803f223c948145870e37df14f52b0, type: 3}
   - {fileID: 2511348980303381671, guid: 919d56012104ca444bb64b98f779c91a, type: 3}
   - {fileID: 3325011891970239376, guid: f90033aa756fc1d4ab676844577c299f, type: 3}
-  - {fileID: 0}
+  - {fileID: 2647221384408606844, guid: c8edf68491930de4f99c5433eaeb6566, type: 3}
+  - {fileID: 2999100479544876924, guid: 2c3217bb22a52fc42971d9391979e513, type: 3}
   networkDiscovery: {fileID: 0}
   playing: 0
   ls: {fileID: 0}
+  gamemode: 0
 --- !u!114 &1866337866
 MonoBehaviour:
   m_ObjectHideFlags: 0

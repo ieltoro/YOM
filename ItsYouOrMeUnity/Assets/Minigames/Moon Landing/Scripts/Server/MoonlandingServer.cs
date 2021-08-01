@@ -67,5 +67,13 @@ public class MoonlandingServer : MonoBehaviour
         yield return new WaitForSeconds(1);
         print("0");
     }
+
+
+    public void ReturnFromGame()
+    {
+        GameSaveHolder.gsh.resultsLastGame.Add(GameSaveHolder.gsh.players[0]);
+        ServerCalls.sc.ReturnFromMiniGame(YOMNetworkManager.manager.gamemode);
+        SceneManager.LoadScene("Game");
+    }
     #endregion
 }

@@ -4088,10 +4088,12 @@ MonoBehaviour:
   - {fileID: 595686231292977534, guid: a74803f223c948145870e37df14f52b0, type: 3}
   - {fileID: 2511348980303381671, guid: 919d56012104ca444bb64b98f779c91a, type: 3}
   - {fileID: 3325011891970239376, guid: f90033aa756fc1d4ab676844577c299f, type: 3}
-  - {fileID: 0}
+  - {fileID: 2647221384408606844, guid: c8edf68491930de4f99c5433eaeb6566, type: 3}
+  - {fileID: 2999100479544876924, guid: 2c3217bb22a52fc42971d9391979e513, type: 3}
   networkDiscovery: {fileID: 1744123397}
   playing: 0
   ls: {fileID: 414388308}
+  gamemode: 0
 --- !u!4 &1744123396
 Transform:
   m_ObjectHideFlags: 0
@@ -4510,6 +4512,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fae10641556ff41b43898496474c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minigames:
+  - {fileID: 11400000, guid: c1fa228239c1cb543a26fcb7f56761d3, type: 2}
+  - {fileID: 11400000, guid: 29dcf1c87551f81419f6675c1203df1f, type: 2}
+  - {fileID: 11400000, guid: 62cfbe05c8a2e69489e609d8195b306d, type: 2}
+  - {fileID: 11400000, guid: 126275074736b2d449097e0d0d3c3358, type: 2}
+  - {fileID: 11400000, guid: e645cd70b38830b41bcaf47224b77051, type: 2}
+  - {fileID: 11400000, guid: 1bcb810c042338c47a4aa3f61d6bba3d, type: 2}
+  - {fileID: 11400000, guid: 44a4b00fc76a31646844686947f9f1d0, type: 2}
+  - {fileID: 11400000, guid: bb4d7f0ed1613604bb8b63324bf30a59, type: 2}
   round: 0
   players: []
   playersAliveAndConnected: 0

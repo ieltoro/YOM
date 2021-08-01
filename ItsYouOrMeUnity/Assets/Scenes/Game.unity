@@ -3638,6 +3638,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 126275074736b2d449097e0d0d3c3358, type: 2}
   - {fileID: 11400000, guid: e645cd70b38830b41bcaf47224b77051, type: 2}
   - {fileID: 11400000, guid: 1bcb810c042338c47a4aa3f61d6bba3d, type: 2}
+  - {fileID: 11400000, guid: 62cfbe05c8a2e69489e609d8195b306d, type: 2}
   miniGDisplay:
   - {fileID: 448457561}
   - {fileID: 466754206}

@@ -12,7 +12,6 @@ public class LobbySetup : MonoBehaviour
     ServerCalls sc;
     [SerializeField] YOMNetworkManager manager;
     [SerializeField] TransitionSize trans;
-    [Tooltip(" 0 = Start \n 1 = lobby \n 2 = roundstart")]
     [SerializeField] GameObject startCanvas, canvasHost, lobbyLocalCanvas, lobbyOnlineCanvas, staringGameCanvas;
     [SerializeField] GameSaveHolder save;
     public GameObject hostLeader;
@@ -116,14 +115,24 @@ public class LobbySetup : MonoBehaviour
             g.GetComponent<PlayerScript>().SetHP(starthp);
         }
     }
-    public void PlayerReady()
+    public void PlayersReady(int mode) // 0 = normal, 1 = minigames
     {
         foreach(LobbyCharacter g in players)
         {
             g.character.StopMoving();
         }
+       
+        manager.gamemode = mode;
         manager.playing = true;
-        StartGame();
+
+        if (mode == 0)
+        {
+            StartGame();
+        }
+        if(mode == 1)
+        {
+            StartMiniGames();
+        }
     }
     private void StartGame()
     {
@@ -143,5 +152,9 @@ public class LobbySetup : MonoBehaviour
 
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene("Game");
+    }
+    private void StartMiniGames()
+    {
+
     }
 }

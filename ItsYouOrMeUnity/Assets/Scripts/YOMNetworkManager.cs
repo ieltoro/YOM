@@ -25,6 +25,7 @@ public class YOMNetworkManager : NetworkManager
     #region Server
     public bool playing;
     public LobbySetup ls;
+    public int gamemode; 
     ServerCalls sc;
     public override void OnStartServer()
     {
