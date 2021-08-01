@@ -72,7 +72,10 @@ public class ZoneholderServer : MonoBehaviour
     }
     public void NextZone()
     {
-
+        foreach (ZoneholderController p in controllers)
+        {
+            p.GetComponent<ZoneholderController>().InsideZone(true);
+        }
         StartCoroutine(ActivateNextZone());
     }
     IEnumerator ActivateNextZone()

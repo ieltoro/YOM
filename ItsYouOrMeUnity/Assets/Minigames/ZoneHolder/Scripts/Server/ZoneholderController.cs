@@ -9,7 +9,9 @@ public class ZoneholderController : MonoBehaviour
     [SerializeField] Rigidbody rb;
     Vector2 inputController;
     Vector3 vPos;
-    public int score;
+    public float size;
+    [SerializeField] float scoreSecond;
+    bool inside;
 
     public void StartMoving(bool b)
     {
@@ -26,5 +28,13 @@ public class ZoneholderController : MonoBehaviour
         inputController *= speed;
         vPos = new Vector3(inputController.y, 0, -inputController.x);
         rb.AddTorque(vPos, ForceMode.VelocityChange);
+        if(inside)
+        {
+            size += scoreSecond;
+        }
+    }
+    public void InsideZone(bool zone)
+    {
+        inside = zone;
     }
 }

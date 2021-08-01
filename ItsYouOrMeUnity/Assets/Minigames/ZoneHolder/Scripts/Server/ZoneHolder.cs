@@ -9,6 +9,7 @@ public class ZoneHolder : MonoBehaviour
     private void Start()
     {
         manager = FindObjectOfType<ZoneholderServer>();
+        StartCoroutine(TimerZone());
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +17,13 @@ public class ZoneHolder : MonoBehaviour
         {
              player = other.gameObject;
         }
-        other.transform.GetComponent<ZoneholderController>().score++;
+        other.GetComponent<ZoneholderController>().InsideZone(true);
         manager.NextZone();
+    }
+
+    IEnumerator TimerZone()
+    {
+        yield return new WaitForSeconds(10);
+        manager.
     }
 }
