@@ -53,11 +53,7 @@ public class ZoneholderPlayer : NetworkBehaviour
 
     #region Server
     public GameObject owner;
-    public void StartGame()
-    {
-        RPC_StartGame();
-        myPlayer.StartMoving(true);
-    }
+
     [Command]
     void CMD_RecievedInput(Vector2 input)
     {
@@ -66,11 +62,7 @@ public class ZoneholderPlayer : NetworkBehaviour
     #endregion
     #region Client
 
-    [TargetRpc]
-    void RPC_StartGame()
-    {
-        client.StartGame();
-    }
+
     public void RecievedInput(Vector2 input)
     {
         CMD_RecievedInput(input);

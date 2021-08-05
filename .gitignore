@@ -46,6 +46,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.so
 
 #Substance painter files(to big)
 *.spp

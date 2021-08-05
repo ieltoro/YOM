@@ -24,6 +24,7 @@ public class ZoneHolder : MonoBehaviour
     IEnumerator TimerZone()
     {
         yield return new WaitForSeconds(10);
-        manager.
+        manager.NextZone();
+        Destroy(gameObject);
     }
 }

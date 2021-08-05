@@ -122,6 +122,18 @@ public class ServerCalls : NetworkBehaviour
     }
 
     #endregion
+    #region Zoneholder
+
+    public void StartZone(bool answer)
+    {
+        RPC_StartZone(answer);
+    }
+    [ClientRpc]
+    void RPC_StartZone(bool answer)
+    {
+        FindObjectOfType<ZoneholderClient>().StartGame(answer);
+    }
+    #endregion
     #endregion
 
 }

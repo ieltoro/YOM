@@ -43,45 +43,83 @@ public class ZoneholderServer : MonoBehaviour
         StartCoroutine(StartgameCD());
     }
 
-
     #endregion
     #region GAME
 
     [Header("Zones")]
     [SerializeField] GameObject zonesPrefab;
-    public Transform[] spawnZonesPos;
+    public List<Transform> spawnZonesPos;
     int currentZone, newZone;
+    int zoneAmounts = 10;
     IEnumerator StartgameCD()
     {
         yield return new WaitForSeconds(1);
-
-        foreach (ZoneholderPlayer p in players)
+        foreach (ZoneholderController p in controllers)
         {
-            p.StartGame();
+            p.StartMoving(true);
         }
-        yield return new WaitForSeconds(2);
-        print("3");
-        yield return new WaitForSeconds(1);
-        print("2");
-        yield return new WaitForSeconds(1);
-        print("1");
-        yield return new WaitForSeconds(1);
-        print("0");
+        sc.StartZone(true);
 
+        yield return new WaitForSeconds(2);
+       
+        for (int i = 3; i >= 0; i--)
+        {
+            print(i);
+            yield return new WaitForSeconds(1);
+        }
         NextZone();
     }
     public void NextZone()
     {
         foreach (ZoneholderController p in controllers)
         {
-            p.GetComponent<ZoneholderController>().InsideZone(true);
+            p.GetComponent<ZoneholderController>().InsideZone(false);
         }
+        if (zoneAmounts == 10)
+        {
+            newZone = Random.Range(0, spawnZonesPos.Count);
+        }
+        else
+        {
+            if (zoneAmounts == -1)
+            {
+                EndGame();
+                return;
+            }
+            else
+            {
+                newZone = Random.Range(0, spawnZonesPos.Count);
+                if (Vector3.Distance(spawnZonesPos[currentZone].position, spawnZonesPos[newZone].position) > 10)
+                {
+                    print("Continue, new zone is far enough");
+                }
+                else
+                {
+                    print("Zone aint far enough, redo");
+                    NextZone();
+                    return;
+                }
+            }
+        }
+
+        currentZone = newZone;
+        Instantiate(zonesPrefab, spawnZonesPos[currentZone].position, spawnZonesPos[currentZone].rotation);
+        zoneAmounts--;
         StartCoroutine(ActivateNextZone());
+    }
+    void GrabSpawn()
+    {
+
+        
     }
     IEnumerator ActivateNextZone()
     {
         float f = Random.Range(1f, 3f);
         yield return new WaitForSeconds(f);
+    }
+    void EndGame()
+    {
+
     }
     #endregion
     public void ReturnFromGame()

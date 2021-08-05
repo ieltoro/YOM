@@ -8,22 +8,31 @@ using UnityEngine.UI;
 public class ClientLobby : MonoBehaviour
 {
     YOMNetworkDiscovery networkDiscovery;
-    [Tooltip("0 = JoinPanel \n 1 = Connecting \n 2 = LobbySceen \n 3 = Waiting")]
+    [Tooltip("0 = First Laumch \n 1 = Sign up \n 2 = Sign in \n 3 = Menu \n 4 = Connecting \n 5 = Lobby \n 6 = Waiting")]
     [SerializeField] GameObject[] canvas;
     [SerializeField] YOMNetworkManager manager;
     [SerializeField] InputField ifNameplayer,idInput;
 
     private void Start()
     {
-        if (PlayerPrefs.GetString("PlayerID") == null || PlayerPrefs.GetString("PlayerID") == "")
+        Screen.orientation = ScreenOrientation.Portrait;
+        
+        if(PlayerPrefs.GetString("FirstLaunch") == "")
         {
-            int r = (int)Random.Range(1, 9999999999);
-            //PlayerPrefs.SetString("PlayerID", "ID" + r.ToString());
-            PlayerPrefs.SetString("PlayerID", GetProjectName());
+            print("First launch");
+            ChangeUi(0);
         }
-        PlayerPrefs.SetString("PlayerID", GetProjectName());
-        ClientSaveGame.csg.playerID = PlayerPrefs.GetString("PlayerID");
-        ClientSaveGame.csg.cosmetic = Random.Range(0, 5);
+
+
+        //if (PlayerPrefs.GetString("PlayerID") == null || PlayerPrefs.GetString("PlayerID") == "")
+        //{
+        //    int r = (int)Random.Range(1, 9999999999);
+        //    //PlayerPrefs.SetString("PlayerID", "ID" + r.ToString());
+        //    PlayerPrefs.SetString("PlayerID", GetProjectName());
+        //}
+        //PlayerPrefs.SetString("PlayerID", GetProjectName());
+        //ClientSaveGame.csg.playerID = PlayerPrefs.GetString("PlayerID");
+        //ClientSaveGame.csg.cosmetic = Random.Range(0, 5);
     }
     public string GetProjectName()
     {

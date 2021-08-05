@@ -21,6 +21,12 @@ public class ClientSaveGame : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    public void SetAccount()
+    {
+
+    }
+
+    private string accountName;
     public string playerName;
     public int cosmetic = 2;
     public string playerID;
