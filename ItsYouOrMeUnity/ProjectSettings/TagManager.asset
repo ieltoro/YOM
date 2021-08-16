@@ -7,6 +7,8 @@ TagManager:
   - Tile
   - Bomb
   - Character
+  - BuildZone
+  - House
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - Water
   - UI
   - CharacterDetection
-  - 
+  - BuildZone
   - Curtain
   - Bilboard
   - Stage

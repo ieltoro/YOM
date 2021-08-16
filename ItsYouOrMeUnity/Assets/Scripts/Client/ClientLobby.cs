@@ -9,18 +9,24 @@ public class ClientLobby : MonoBehaviour
 {
     YOMNetworkDiscovery networkDiscovery;
     [Tooltip("0 = First Laumch \n 1 = Sign up \n 2 = Sign in \n 3 = Menu \n 4 = Connecting \n 5 = Lobby \n 6 = Waiting")]
-    [SerializeField] GameObject[] canvas;
+    public GameObject[] canvas;
     [SerializeField] YOMNetworkManager manager;
-    [SerializeField] InputField ifNameplayer,idInput;
 
-    private void Start()
+    private void Awake()
     {
         Screen.orientation = ScreenOrientation.Portrait;
-        
-        if(PlayerPrefs.GetString("FirstLaunch") == "")
+    }
+
+    public void ConnectedToFirebase()
+    {
+        print(1.1);
+
+        if (PlayerPrefs.GetString("FirstLaunch") == "")
         {
+            print(1.2);
             print("First launch");
             ChangeUi(0);
+            print(1.3);
         }
 
 
@@ -49,17 +55,16 @@ public class ClientLobby : MonoBehaviour
     {
         if (networkDiscovery == null)
             networkDiscovery = gameObject.AddComponent<YOMNetworkDiscovery>();
-        if (ifNameplayer.text == null || ifNameplayer.text == "")
-        {
-            print("Need a name");
-            return;
-        }
+
         PlayerPrefs.SetString("PlayerID", GetProjectName());
         ClientSaveGame.csg.playerID = PlayerPrefs.GetString("PlayerID");
         ChangeUi(1);
-        ClientSaveGame.csg.playerName = ifNameplayer.text;
         networkDiscovery.StartDiscovery();
         
+    }
+    public void PressedMyTown()
+    {
+        ChangeScene("MyTown Phone");
     }
     public void FoundServer(string ip4)
     {
@@ -78,6 +83,7 @@ public class ClientLobby : MonoBehaviour
     public void ChangeScene(string name)
     {
         print("Connected anc change to " + name);
-        SceneManager.LoadScene("Battleship Phone");
+        SceneManager.LoadScene(name);
     }
+
 }

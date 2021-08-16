@@ -4,30 +4,30 @@ using UnityEngine;
 
 public class WorldTimer : MonoBehaviour
 {
-    //public static WorldTimer sharedInstance = null;
+    public static WorldTimer sharedInstance = null;
     private string url = "http://appsbyapes.com/Time/WorldTEU.php";
     private string timeData;
     private string startTime;
     private string startDate;
 
-    //void Awake()
-    //{
-    //    if (sharedInstance == null)
-    //    {
-    //        sharedInstance = this;
-    //    }
-    //    else if (sharedInstance != this)
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //    DontDestroyOnLoad(gameObject);
-    //}
+    void Awake()
+    {
+        if (sharedInstance == null)
+        {
+            sharedInstance = this;
+        }
+        else if (sharedInstance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
-        StartCoroutine(getTime());
+        StartCoroutine(GetTime());
     }
 
-    public IEnumerator getTime()
+    public IEnumerator GetTime()
     {
         WWW www = new WWW(url);
         yield return www;
@@ -41,13 +41,12 @@ public class WorldTimer : MonoBehaviour
         print("Time :" + startTime + "  Date : " + startDate);
     }
 
-
-    public string getCurrentDateNow()
+    public string GetCurrentDateNow()
     {
         return startDate;
     }
 
-    public string getCurrentTimeNow()
+    public string GetCurrentTimeNow()
     {
         return startTime;
     }

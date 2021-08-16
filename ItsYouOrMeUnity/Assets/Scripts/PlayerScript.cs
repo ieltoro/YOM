@@ -33,8 +33,7 @@ public class PlayerScript : NetworkBehaviour
             gameObject.name = "MyPrefab";
             gameObject.tag = "Player";
             ClientSaveGame.csg.localPlayer = this.gameObject;
-            playerName = ClientSaveGame.csg.playerName;
-            characterCosmetics = ClientSaveGame.csg.cosmetic;
+            playerName = ClientSaveGame.csg.playerNickname;
             id = ClientSaveGame.csg.playerID;
             ConnectUpdate(playerName, characterCosmetics, id);
             if (!leader)
