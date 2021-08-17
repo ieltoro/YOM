@@ -9,6 +9,10 @@ TagManager:
   - Character
   - BuildZone
   - House
+  - Garage
+  - Farm
+  - Shop
+  - Casino
   layers:
   - Default
   - TransparentFX

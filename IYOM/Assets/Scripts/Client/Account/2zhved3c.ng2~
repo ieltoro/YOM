@@ -1,0 +1,318 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using Firebase.Auth;
+using Firebase.Database;
+using Firebase;
+using Firebase.Firestore;
+
+public class AutManager : MonoBehaviour
+{
+    public static AutManager aut;
+    [Header("Firebase")]
+    public DependencyStatus dependencyStatus;
+    public FirebaseAuth auth;
+    public DatabaseReference reference;
+    public FirebaseUser user;
+    public FirebaseFirestore db;
+
+    [Header("Login")]
+    [SerializeField] InputField loginName;
+    [SerializeField] InputField loginPassord;
+
+
+    [Header("Register")]
+    [SerializeField] InputField registerName;
+    [SerializeField] InputField registerPassword1, registerPassword2, registerEmail;
+    [SerializeField] ClientLobby lobby;
+
+    #region Setup
+
+    private void Awake()
+    {
+        if (AutManager.aut == null)
+        {
+            AutManager.aut = this;
+        }
+        else
+        {
+            if (AutManager.aut != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        DontDestroyOnLoad(this.gameObject);
+
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        {
+            dependencyStatus = task.Result;
+            if (dependencyStatus == DependencyStatus.Available)
+            {
+                InitializeFirebase();
+            }
+            else
+            {
+                Debug.LogError("noppsi to firebase " + dependencyStatus);
+            }
+        });
+    }
+    private void InitializeFirebase()
+    {
+        auth = FirebaseAuth.DefaultInstance;
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+        db = FirebaseFirestore.DefaultInstance;
+        print(1);
+        //lobby.ConnectedToFirebase();
+        TestStore();
+        print(2);
+    }
+
+    void TestStore()
+    {
+        DocumentReference docRef = db.Collection("users").Document("alovelace");
+        Dictionary<string, object> user = new Dictionary<string, object>
+{
+        { "First", "Ada" },
+        { "Last", "Lovelace" },
+        { "Born", 1815 },
+};
+        docRef.SetAsync(user).ContinueWith(task => {
+            Debug.Log("Added data to the alovelace document in the users collection.");
+        });
+    }
+    #endregion
+
+    #region Login
+    public void LoginPressed()
+    {
+        StartCoroutine(Login(loginName.text, loginPassord.text));
+    }
+    IEnumerator Login(string _name, string _password)
+    {
+        var LoginTask = auth.SignInWithEmailAndPasswordAsync(_name, _password);
+        yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
+
+        if (LoginTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {LoginTask.Exception}");
+            FirebaseException firebaseEX = LoginTask.Exception.GetBaseException() as FirebaseException;
+            AuthError errorCode = (AuthError)firebaseEX.ErrorCode;
+
+            string message = "Login Failed!";
+            switch (errorCode)
+            {
+                case AuthError.MissingEmail:
+                    message = "Missing Email";
+                    break;
+                case AuthError.MissingPassword:
+                    message = "Missing Password";
+                    break;
+                case AuthError.WrongPassword:
+                    message = "Wrong Password";
+                    break;
+                case AuthError.InvalidEmail:
+                    message = "Invalid Email";
+                    break;
+                case AuthError.UserNotFound:
+                    message = "Account does not exist";
+                    break;
+            }
+            print(message);
+        }
+        else //Signed in
+        {
+            user = LoginTask.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.Email);
+            GetUserData();
+        }
+    }
+    void GetUserData()
+    {
+        FirebaseDatabase.DefaultInstance.GetReference("Users").Child(user.UserId).GetValueAsync().ContinueWith(task =>
+          {
+              if (task.IsFaulted)
+              {
+                  print("We have an error");
+                  // Handle the error...
+              }
+              else if (task.IsCompleted)
+              {
+                  DataSnapshot snapshot = task.Result;
+                  string json = snapshot.GetRawJsonValue();
+                  print(snapshot.ChildrenCount);
+                  ClientSaveGame.csg.myData = JsonUtility.FromJson<UserData>(json);
+                  print("Done");
+                  lobby.ChangeUi(3);
+              }
+          });
+    }
+
+
+    public void AnonymSigninPressed()
+    {
+        lobby.ChangeUi(4);
+        auth.SignInAnonymouslyAsync().ContinueWith(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInAnonymouslyAsync was canceled.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
+                return;
+            }
+
+            user = task.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                user.DisplayName, user.UserId);
+            lobby.ChangeUi(3);
+        });
+    }
+    #endregion
+
+    #region Register
+    public void RegisterPressed()
+    {
+        if (registerPassword1.text != registerPassword2.text)
+        {
+            print("Missmatch passwords");
+            return;
+        }
+
+
+        //auth.CreateUserWithEmailAndPasswordAsync(registerEmail.text, registerPassword1.text).ContinueWith(task => {
+        //    if (task.IsCanceled)
+        //    {
+        //        Debug.LogError("CreateUserWithEmailAndPasswordAsync was canceled.");
+        //        return;
+        //    }
+        //    if (task.IsFaulted)
+        //    {
+        //        Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+        //        return;
+        //    }
+
+        //    // Firebase user has been created.
+        //    Firebase.Auth.FirebaseUser newUser = task.Result;
+        //    Debug.LogFormat("Firebase user created successfully: {0} ({1})",
+        //        newUser.DisplayName, newUser.UserId);
+        //});
+
+
+        StartCoroutine(Register(registerName.text, registerPassword1.text, registerEmail.text));
+    }
+    IEnumerator Register(string _username, string _password, string _email)
+    {
+        var RegisterTask = auth.CreateUserWithEmailAndPasswordAsync(_email, _password);
+        yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
+
+        if (RegisterTask.Exception != null)
+        {
+            print("0");
+            Debug.LogWarning(message: $"Failed to register task with {RegisterTask.Exception}");
+            FirebaseException firebaseEx = RegisterTask.Exception.GetBaseException() as FirebaseException;
+            AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+
+            string message = "Register Failed!";
+            print("1");
+            switch (errorCode)
+            {
+                case AuthError.MissingEmail:
+                    message = "Missing Email";
+                    break;
+                case AuthError.MissingPassword:
+                    message = "Missing Password";
+                    break;
+                case AuthError.WeakPassword:
+                    message = "Weak Password";
+                    break;
+                case AuthError.EmailAlreadyInUse:
+                    message = "Email Already In Use";
+                    break;
+            }
+            print(message);
+        }
+        else
+        {
+            print("2");
+            user = RegisterTask.Result;
+
+            if (user != null)
+            {
+                UserProfile profile = new UserProfile { DisplayName = _username };
+                var ProfileTask = user.UpdateUserProfileAsync(profile);
+                print("3");
+                yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
+
+                if (ProfileTask.Exception != null)
+                {
+                    print("4");
+                    Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
+                    FirebaseException firebaseEx = ProfileTask.Exception.GetBaseException() as FirebaseException;
+                    AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+                    print("Failed");
+                }
+                else
+                {
+                    print("Successsss! user = " + profile.DisplayName);
+                    SetupData();
+                }
+            }
+        }
+    }
+
+    public void SetupData()
+    {
+        string uid = user.UserId;
+        UserData data = new UserData(uid, 0, 0);
+        string json = JsonUtility.ToJson(data);
+        print(json);
+        reference.Child("Users").Child(uid).SetRawJsonValueAsync(json).ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                ClientSaveGame.csg.myData = data;
+                DoneUpload();
+            }
+            else
+            {
+                print("Fail");
+            }
+        });
+    }
+
+    void DoneUpload()
+    {
+        print("Done");
+        lobby.ChangeUi(3);
+    }
+
+    #endregion
+
+    #region Data
+
+    public void ReuploadData()
+    {
+        UserData data = ClientSaveGame.csg.myData;
+        string json = JsonUtility.ToJson(data);
+        print(json);
+        reference.Child("Users").Child(user.UserId).SetRawJsonValueAsync(json).ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                ClientSaveGame.csg.myData = data;
+                DoneUpload();
+            }
+            else
+            {
+                print("Fail");
+            }
+        });
+    }
+
+    #endregion
+}
+

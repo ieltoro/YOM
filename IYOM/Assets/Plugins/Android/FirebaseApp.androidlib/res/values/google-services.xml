@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://iyom-a770b-default-rtdb.europe-west1.firebasedatabase.app</string>
+  <string name="gcm_defaultSenderId" translatable="false">574334201264</string>
+  <string name="google_storage_bucket" translatable="false">iyom-a770b.appspot.com</string>
+  <string name="project_id" translatable="false">iyom-a770b</string>
+  <string name="google_api_key" translatable="false">AIzaSyCIcnxvVxN9uchXuxP-UuLLcMpGFb3rqRs</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCIcnxvVxN9uchXuxP-UuLLcMpGFb3rqRs</string>
+  <string name="google_app_id" translatable="false">1:574334201264:android:5a5b94c32b5a92d990ba75</string>
+  <string name="default_web_client_id" translatable="false">574334201264-jin0ms8a68hitt2hgs4lf652qigcn5b4.apps.googleusercontent.com</string>
+</resources>
