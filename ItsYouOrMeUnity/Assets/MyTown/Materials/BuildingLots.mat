@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Gras
+  m_Name: BuildingLots
   m_Shader: {fileID: -6465566751694194690, guid: a59f7378c1f93064ab186e31045b075c,
     type: 3}
   m_ShaderKeywords: 
@@ -116,11 +116,14 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _edgeAmount: 0
+    - _edgeIntensity: 0
     m_Colors:
     - _BaseColor: {r: 0.23955731, g: 0.8018868, b: 0.46987087, a: 1}
-    - _Color: {r: 0.23955727, g: 0.8018868, b: 0.4698708, a: 1}
+    - _Color: {r: 0.5943396, g: 0.43161577, b: 0.31212172, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _edgeColor: {r: 0, g: 0, b: 0, a: 0}
     - _offset: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3141028926780801259
