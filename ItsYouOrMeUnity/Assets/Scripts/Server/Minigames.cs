@@ -7,4 +7,5 @@ public class Minigames : ScriptableObject
 {
     public string nameMinigame;
     public Sprite sprite;
+    public Text description;
 }

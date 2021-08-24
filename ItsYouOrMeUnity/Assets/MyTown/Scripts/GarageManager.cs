@@ -4,15 +4,39 @@ using UnityEngine;
 
 public class GarageManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private int currentLevel;
+    [SerializeField] GameObject[] levels;
+    [SerializeField] GameObject buildingUi;
 
-    // Update is called once per frame
-    void Update()
+    public void SetUpBuilding(int level)
     {
-        
+        currentLevel = level;
+        levels[currentLevel - 1].SetActive(true);
+    }
+    public void PressedBuilding()
+    {
+        print("WELCOME TO MY HOUSE");
+        buildingUi.SetActive(true);
+    }
+    public void PressedUpgrade()
+    {
+        if (ClientSaveGame.csg.pBalance.coins > 100)
+        {
+            levels[currentLevel - 1].SetActive(false);
+            levels[currentLevel].SetActive(true);
+            currentLevel++;
+        }
+        else
+        {
+            Debug.Log("Need more coins");
+        }
+    }
+    public void PressedCustomize()
+    {
+        print("Customize");
+    }
+    public void ExitBuilding()
+    {
+        buildingUi.SetActive(false);
     }
 }

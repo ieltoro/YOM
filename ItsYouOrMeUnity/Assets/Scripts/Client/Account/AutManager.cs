@@ -11,7 +11,8 @@ using System;
 public class AutManager : MonoBehaviour
 {
     public static AutManager aut;
-   
+    [SerializeField] ClientStartup start;
+
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;
@@ -25,11 +26,7 @@ public class AutManager : MonoBehaviour
     [Header("Register")]
     [SerializeField] InputField registerName;
     [SerializeField] InputField registerPassword1, registerPassword2, registerEmail;
-    [SerializeField] ClientLobby lobby;
-   
-    [Header("Setup")]
-    bool[] _skins = new bool[20];
-    public Dictionary<string, object> databasetwo;
+
     #region Setup
 
     private void Awake()
@@ -46,7 +43,6 @@ public class AutManager : MonoBehaviour
             }
         }
         DontDestroyOnLoad(this.gameObject);
-
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             dependencyStatus = task.Result;
@@ -60,12 +56,11 @@ public class AutManager : MonoBehaviour
             }
         });
     }
-    private void InitializeFirebase()
+    public void InitializeFirebase()
     {
         auth = FirebaseAuth.DefaultInstance;
         db = FirebaseFirestore.DefaultInstance;
         print("connected");
-        //lobby.ConnectedToFirebase();
     }
     #endregion
 
@@ -83,6 +78,8 @@ public class AutManager : MonoBehaviour
 
     public void LoginPressed()
     {
+        start.ChangText("Signing in");
+        start.ChangePanel(3);
         auth.SignInWithEmailAndPasswordAsync(loginName.text, loginPassord.text).ContinueWith(task => {
             if (task.IsCanceled)
             {
@@ -103,6 +100,7 @@ public class AutManager : MonoBehaviour
     }
     void GetUserData()
     {
+        //start.ChangText("Getting Data");
         Query playerquerry = db.Collection("users").Document(user.UserId).Collection("player");
         playerquerry.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
@@ -126,14 +124,15 @@ public class AutManager : MonoBehaviour
                     stats = documentSnapshot.ConvertTo<PlayerStats>();
                 }
             };
-            lobby.ChangeUi(3);
+            start.SignedIn();
         });
 
     }
 
     public void AnonymSigninPressed()
     {
-        lobby.ChangeUi(4);
+        start.ChangText("Working on it");
+        start.ChangePanel(3);
         auth.SignInAnonymouslyAsync().ContinueWith(task =>
         {
             if (task.IsCanceled)
@@ -150,7 +149,7 @@ public class AutManager : MonoBehaviour
             user = task.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 user.DisplayName, user.UserId);
-            lobby.ChangeUi(3);
+            start.SignedIn();
         });
     }
     #endregion
@@ -163,6 +162,8 @@ public class AutManager : MonoBehaviour
             print("Missmatch passwords");
             return;
         }
+        start.ChangText("Signing you up");
+        start.ChangePanel(3);
         auth.CreateUserWithEmailAndPasswordAsync(registerEmail.text, registerPassword1.text).ContinueWith(task =>
         {
             if (task.IsCanceled)
@@ -181,10 +182,12 @@ public class AutManager : MonoBehaviour
                 user.DisplayName, user.UserId);
             SetupData();
         });
-        
-    }
+
+    }    
+
     public void SetupData()
     {
+        start.ChangText("Fixing your home");
         DocumentReference reff = db.Collection("users").Document(user.UserId);
         PlayerBalance pb = new PlayerBalance
         {
@@ -198,7 +201,6 @@ public class AutManager : MonoBehaviour
             PlayerSkins ps = new PlayerSkins
             {
                 equiped = 0,
-                unlocked = _skins
             };
             reff.Collection("player").Document("skins").SetAsync(ps).ContinueWithOnMainThread(task =>
             {
@@ -276,7 +278,7 @@ public class AutManager : MonoBehaviour
     {
         print("Done");
         ClientSaveGame.csg.PlayerSignedIn(registerName.text, user.UserId);
-        lobby.ChangeUi(3);
+        start.SignedIn();
     }
     #endregion
 

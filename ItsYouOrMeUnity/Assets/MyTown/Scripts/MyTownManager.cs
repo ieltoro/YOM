@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MyTownManager : MonoBehaviour
 {
@@ -24,9 +25,11 @@ public class MyTownManager : MonoBehaviour
     int buildingArea;
     public List<bool> buildings;
 
+    [Header("Canvases")]
+    [SerializeField] GameObject houseCanvas;
+
     void Start()
     {
-
         timer = FindObjectOfType<WorldTimer>();
         AutManager.aut.GetMyTownData();
     }
@@ -34,56 +37,60 @@ public class MyTownManager : MonoBehaviour
     public void GetArea()
     {
         coins = ClientSaveGame.csg.pBalance.coins;
-        coinsText.text = coins.ToString();
-     
+        coinsText.text = "Coins " + coins.ToString();
+        #region House
+
+        FindObjectOfType<HouseManager>().SetUpBuilding(ClientSaveGame.csg.townHouse.level);
+
+        #endregion
         #region garage
-        if(ClientSaveGame.csg.townGarage.level > 0)
+        if (ClientSaveGame.csg.townGarage.level > 0)
         {
-            BuildOnLot(buildingPrefabs[0], ClientSaveGame.csg.townGarage.zonePos);
+            GameObject temp = BuildOnLot(buildingPrefabs[0], ClientSaveGame.csg.townGarage.zonePos);
+            temp.GetComponent<GarageManager>().SetUpBuilding(ClientSaveGame.csg.townHouse.level);
             buildings[0] = true;
         }
         #endregion
         #region farm
         if (ClientSaveGame.csg.townFarm.level > 0)
         {
-            BuildOnLot(buildingPrefabs[1], ClientSaveGame.csg.townFarm.zonePos);
+            GameObject temp = BuildOnLot(buildingPrefabs[1], ClientSaveGame.csg.townFarm.zonePos);
             buildings[1] = true;
         }
         #endregion
         #region shop
         if (ClientSaveGame.csg.townShop.level > 0)
         {
-            BuildOnLot(buildingPrefabs[2], ClientSaveGame.csg.townShop.zonePos);
+            GameObject temp = BuildOnLot(buildingPrefabs[2], ClientSaveGame.csg.townShop.zonePos);
             buildings[2] = true;
         }
         #endregion
         #region casino
         if (ClientSaveGame.csg.townCasino.level > 0)
         {
-            BuildOnLot(buildingPrefabs[3], ClientSaveGame.csg.townCasino.zonePos);
+            GameObject temp = BuildOnLot(buildingPrefabs[3], ClientSaveGame.csg.townCasino.zonePos);
             buildings[3] = true;
         }
         #endregion
 
+        print("Done with setup");
         // HÄmta vilka hus som är byggda 
     }
 
-    void BuildOnLot(GameObject _buildingPref, int pos)
+    GameObject BuildOnLot(GameObject _buildingPref, int pos)
     {
         GameObject pref = Instantiate(_buildingPref, buildingZones[pos].transform.position, buildingZones[pos].transform.rotation);
+        return pref;
     }
 
     public void PressedBuyZone(int zoneId, bool open)
     {
         buildingArea = zoneId;
-        if(buildings.Count > 0)
+        for (int i = 0; i < buildings.Count; i++)
         {
-            for (int i = 0; i < buildings.Count; i++)
+            if (buildings[i])
             {
-                if (buildings[i])
-                {
-                    buildButtons[i].GetComponent<BuildUIButton>().BuildingAlreadyBuild();
-                }
+                buildButtons[i].GetComponent<BuildUIButton>().BuildingAlreadyBuild();
             }
         }
         buyZoneCanvas.SetActive(open);
@@ -135,5 +142,18 @@ public class MyTownManager : MonoBehaviour
         coinsText.text = coins.ToString();
         AutManager.aut.ChangeBalance(coins);
     }
+
+    public void ReturnToStart()
+    {
+        SceneManager.LoadScene("Lobby Phone");
+    }
+    #region Bulding Chooices 
+
+    public void upgradeHouse()
+    {
+        
+    }
+
+    #endregion
 
 }

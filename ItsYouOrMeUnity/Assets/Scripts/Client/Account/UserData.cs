@@ -62,8 +62,9 @@ public struct MytownHouse
     [FirestoreProperty]
     public string upgradingDone { get; set; }
 }
+
 [FirestoreData]
-public struct MytownGarage
+public struct MytownGarage 
 {
     [FirestoreProperty]
     public int level { get; set; }
@@ -111,5 +112,19 @@ public struct MytownCasino
     public string upgradingDone { get; set; }
 }
 
+
+#endregion
+#region Economy
+
+[FirestoreData]
+public struct Economy
+{
+    [FirestoreProperty]
+    public int level { get; set; }
+    [FirestoreProperty]
+    public bool upgrading { get; set; }
+    [FirestoreProperty]
+    public string upgradingDone { get; set; }
+}
 
 #endregion

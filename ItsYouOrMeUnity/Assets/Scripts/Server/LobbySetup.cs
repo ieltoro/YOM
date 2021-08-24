@@ -153,8 +153,14 @@ public class LobbySetup : MonoBehaviour
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene("Game");
     }
+
+    #region Minigames
+
+
     private void StartMiniGames()
     {
-
+        SceneManager.LoadScene("Minigames");
     }
+
+    #endregion
 }

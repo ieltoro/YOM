@@ -45,14 +45,13 @@ public class ClientSaveGame : MonoBehaviour
         pStats = _stats;
     }
 
-
-
     [Header("My town")]
     public MytownHouse townHouse;
     public MytownGarage townGarage;
     public MytownFarm townFarm;
     public MytownShop townShop;
     public MytownCasino townCasino;
+    public Economy prices;
 
     public void SetMyTownData(MytownCasino _casino, MytownFarm _farm, MytownGarage _garage, MytownHouse _house, MytownShop _shop)
     {

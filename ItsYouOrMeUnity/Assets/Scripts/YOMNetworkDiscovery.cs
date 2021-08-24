@@ -20,6 +20,7 @@ public class YOMNetworkDiscovery : NetworkDiscoveryBase<DiscoveryRequest, Discov
 
     public void StartServer()
     {
+        print("Server can now be found");
         AdvertiseServer();
     }
 

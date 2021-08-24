@@ -5,17 +5,16 @@ using UnityEngine;
 public class FootballClient : MonoBehaviour
 {
     public FootballPlayer player;
+    [SerializeField] Joystick joystick;
     Vector2 input;
    
     void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
-        input = new Vector2(Input.acceleration.x, Input.acceleration.y);
+        input = new Vector2(joystick.Horizontal, joystick.Vertical);
         SendData();
     }
     void SendData()

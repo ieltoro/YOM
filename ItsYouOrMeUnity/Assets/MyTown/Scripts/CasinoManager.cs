@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class CasinoManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private int currentLevel;
+    [SerializeField] GameObject[] levels;
+    [SerializeField] GameObject houseUi;
 
-    // Update is called once per frame
-    void Update()
+    public void SetUpBuilding(int level)
     {
-        
+        currentLevel = level;
+        levels[currentLevel - 1].SetActive(true);
+    }
+    public void PressedBuilding()
+    {
+        print("WELCOME TO MY HOUSE");
+        houseUi.SetActive(true);
+    }
+    public void PressedUpgrade()
+    {
+        if (ClientSaveGame.csg.pBalance.coins > 100)
+        {
+            levels[currentLevel - 1].SetActive(false);
+            levels[currentLevel].SetActive(true);
+            currentLevel++;
+        }
+        else
+        {
+            Debug.Log("Need more coins");
+        }
+    }
+    public void ExitBuilding()
+    {
+        houseUi.SetActive(false);
     }
 }

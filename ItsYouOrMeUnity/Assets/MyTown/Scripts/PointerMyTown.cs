@@ -33,7 +33,23 @@ public class PointerMyTown : MonoBehaviour
                 }
                 if(hit.collider.tag == "House")
                 {
-                    hit.collider.transform.GetComponent<HouseManager>().PressedHouse();
+                    hit.collider.transform.GetComponent<HouseManager>().PressedBuilding();
+                }
+                if (hit.collider.tag == "Garage")
+                {
+                    hit.collider.transform.GetComponent<GarageManager>().PressedBuilding();
+                }
+                if (hit.collider.tag == "Farm")
+                {
+                    hit.collider.transform.GetComponent<FarmManager>().PressedBuilding();
+                }
+                if (hit.collider.tag == "Shop")
+                {
+                    hit.collider.transform.GetComponent<ShopManager>().PressedBuilding();
+                }
+                if (hit.collider.tag == "Casino")
+                {
+                    hit.collider.transform.GetComponent<CasinoManager>().PressedBuilding();
                 }
             }
         }

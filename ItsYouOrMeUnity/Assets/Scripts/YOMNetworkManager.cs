@@ -8,7 +8,6 @@ using Mirror.Discovery;
 public class YOMNetworkManager : NetworkManager
 {
     public static YOMNetworkManager manager;
-    public YOMNetworkDiscovery networkDiscovery;
 
     public override void Awake()
     {
@@ -34,7 +33,7 @@ public class YOMNetworkManager : NetworkManager
         GameObject networkpref = (GameObject)Instantiate(spawnPrefabs[0], transform.position, transform.rotation);
         NetworkServer.Spawn(networkpref);
         sc = networkpref.GetComponent<ServerCalls>();
-        networkDiscovery.StartServer();
+        FindObjectOfType<YOMNetworkDiscovery>().StartServer();
         FindObjectOfType<LobbySetup>().HostSucceded();
     }
     public override void OnStopServer()
