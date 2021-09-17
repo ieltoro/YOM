@@ -13,6 +13,8 @@ TagManager:
   - Farm
   - Shop
   - Casino
+  - Ball
+  - Goal
   layers:
   - Default
   - TransparentFX

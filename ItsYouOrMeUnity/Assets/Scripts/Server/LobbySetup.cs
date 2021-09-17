@@ -159,7 +159,8 @@ public class LobbySetup : MonoBehaviour
 
     private void StartMiniGames()
     {
-        SceneManager.LoadScene("Minigames");
+        SceneManager.LoadScene("Football");
+        //SceneManager.LoadScene("Minigames");
     }
 
     #endregion

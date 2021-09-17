@@ -4142,7 +4142,6 @@ MonoBehaviour:
   - {fileID: 3325011891970239376, guid: f90033aa756fc1d4ab676844577c299f, type: 3}
   - {fileID: 2647221384408606844, guid: c8edf68491930de4f99c5433eaeb6566, type: 3}
   - {fileID: 2999100479544876924, guid: 2c3217bb22a52fc42971d9391979e513, type: 3}
-  networkDiscovery: {fileID: 414388311}
   playing: 0
   ls: {fileID: 414388308}
   gamemode: 0

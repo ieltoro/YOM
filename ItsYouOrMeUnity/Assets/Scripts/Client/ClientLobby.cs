@@ -8,13 +8,13 @@ using UnityEngine.UI;
 public class ClientLobby : MonoBehaviour
 {
     [SerializeField] YOMNetworkDiscovery networkDiscovery;
-    [Tooltip("0 = First Laumch \n 1 = Sign up \n 2 = Sign in \n 3 = Menu \n 4 = Connecting \n 5 = Lobby \n 6 = Waiting")]
     public GameObject[] canvas;
-    [SerializeField] YOMNetworkManager manager;
+    YOMNetworkManager manager;
 
     private void Awake()
     {
         Screen.orientation = ScreenOrientation.Portrait;
+        manager = FindObjectOfType<YOMNetworkManager>();
     }
 
     public string GetProjectName()
@@ -30,11 +30,8 @@ public class ClientLobby : MonoBehaviour
     }
     public void PressedJoinLocal()
     {
-        PlayerPrefs.SetString("PlayerID", GetProjectName());
-        ClientSaveGame.csg.playerID = PlayerPrefs.GetString("PlayerID");
-        ChangeUi(4);
+        ChangeUi(1);
         networkDiscovery.StartDiscovery();
-        
     }
     public void PressedMyTown()
     {

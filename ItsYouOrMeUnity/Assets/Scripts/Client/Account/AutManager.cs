@@ -78,6 +78,7 @@ public class AutManager : MonoBehaviour
 
     public void LoginPressed()
     {
+        //FindObjectOfType<ClientStartup>().ChangText("Signing in");
         start.ChangText("Signing in");
         start.ChangePanel(3);
         auth.SignInWithEmailAndPasswordAsync(loginName.text, loginPassord.text).ContinueWith(task => {
@@ -91,16 +92,17 @@ public class AutManager : MonoBehaviour
                 Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
                 return;
             }
-
             user = task.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})",
-                user.DisplayName, user.UserId);
+            Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.UserId);
+            print(3);
             GetUserData();
         });
     }
-    void GetUserData()
+    public void GetUserData()
     {
-        //start.ChangText("Getting Data");
+        print(5);
+        //FindObjectOfType<ClientStartup>().ChangText("Getting Data");
+        print(6);
         Query playerquerry = db.Collection("users").Document(user.UserId).Collection("player");
         playerquerry.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
@@ -124,14 +126,14 @@ public class AutManager : MonoBehaviour
                     stats = documentSnapshot.ConvertTo<PlayerStats>();
                 }
             };
+            print(6);
             start.SignedIn();
         });
-
     }
 
     public void AnonymSigninPressed()
     {
-        start.ChangText("Working on it");
+        FindObjectOfType<ClientStartup>().ChangText("Working on it");
         start.ChangePanel(3);
         auth.SignInAnonymouslyAsync().ContinueWith(task =>
         {
@@ -145,7 +147,6 @@ public class AutManager : MonoBehaviour
                 Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
                 return;
             }
-
             user = task.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 user.DisplayName, user.UserId);
@@ -162,7 +163,7 @@ public class AutManager : MonoBehaviour
             print("Missmatch passwords");
             return;
         }
-        start.ChangText("Signing you up");
+        FindObjectOfType<ClientStartup>().ChangText("Signing you up");
         start.ChangePanel(3);
         auth.CreateUserWithEmailAndPasswordAsync(registerEmail.text, registerPassword1.text).ContinueWith(task =>
         {
@@ -176,22 +177,19 @@ public class AutManager : MonoBehaviour
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
                 return;
             }
-
             user = task.Result;
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 user.DisplayName, user.UserId);
             SetupData();
         });
-
     }    
 
     public void SetupData()
     {
-        start.ChangText("Fixing your home");
+        FindObjectOfType<ClientStartup>().ChangText("Fixing your home");
         DocumentReference reff = db.Collection("users").Document(user.UserId);
         PlayerBalance pb = new PlayerBalance
         {
-
             coins = 100,
             gold = 0,
             packs = 1,
@@ -270,6 +268,81 @@ public class AutManager : MonoBehaviour
                 });
             });
 
+            DoneUpload();
+        });
+        reff.Collection("player").Document("balance").SetAsync(pb).ContinueWithOnMainThread(task =>
+        {
+            PlayerSkins ps = new PlayerSkins
+            {
+                equiped = 0,
+            };
+            reff.Collection("player").Document("skins").SetAsync(ps).ContinueWithOnMainThread(task =>
+            {
+                PlayerInfo pi = new PlayerInfo
+                {
+                    userid = user.UserId,
+                    nickname = registerName.text,
+                    regdate = WorldTimer.sharedInstance.GetCurrentDateNow(),
+                };
+                reff.Collection("player").Document("info").SetAsync(pi).ContinueWithOnMainThread(task =>
+                {
+                    PlayerStats ps = new PlayerStats
+                    {
+                        level = 1,
+                        wins = 0
+                    };
+                    reff.Collection("player").Document("stats").SetAsync(ps).ContinueWithOnMainThread(task =>
+                    {
+                        MytownHouse mh = new MytownHouse
+                        {
+                            level = 1,
+                            upgrading = false,
+                            upgradingDone = ""
+                        };
+                        reff.Collection("mytown").Document("house").SetAsync(mh).ContinueWithOnMainThread(task =>
+                        {
+                            MytownGarage mg = new MytownGarage
+                            {
+                                level = 0,
+                                zonePos = 0,
+                                upgrading = false,
+                                upgradingDone = ""
+                            };
+                            reff.Collection("mytown").Document("garage").SetAsync(mg).ContinueWithOnMainThread(task =>
+                            {
+                                MytownFarm mf = new MytownFarm
+                                {
+                                    level = 0,
+                                    zonePos = 0,
+                                    upgrading = false,
+                                    upgradingDone = ""
+                                };
+                                reff.Collection("mytown").Document("farm").SetAsync(mf).ContinueWithOnMainThread(task =>
+                                {
+                                    MytownShop ms = new MytownShop
+                                    {
+                                        level = 0,
+                                        zonePos = 0,
+                                        upgrading = false,
+                                        upgradingDone = ""
+                                    };
+                                    reff.Collection("mytown").Document("shop").SetAsync(ms).ContinueWithOnMainThread (task =>
+                                    {
+                                        MytownCasino mc = new MytownCasino
+                                        {
+                                            level = 0,
+                                            zonePos = 0,
+                                            upgrading = false,
+                                            upgradingDone = ""
+                                        };
+                                        reff.Collection("mytown").Document("casino").SetAsync(mc);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
 
             DoneUpload();
         });

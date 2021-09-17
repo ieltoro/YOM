@@ -6,12 +6,13 @@ using Mirror;
 public class FootballPlayer : NetworkBehaviour
 {
     [SerializeField] GameObject prefab;
-    [SerializeField] FootballController myPlayer;
+    public FootballController myPlayer;
     [SerializeField] FootballClient client;
     public string playerID;
    
     void Start()
     {
+        print(11);
         if (hasAuthority)
         {
             print("Is mine");
@@ -23,10 +24,7 @@ public class FootballPlayer : NetworkBehaviour
         if (isServer)
         {
             print("IS Server");
-            GameObject temp = Instantiate(prefab);
-            myPlayer = temp.GetComponent<FootballController>();
-            myPlayer.owner = this;
-            FindObjectOfType<FootballServer>().ConnectedToMiniGame(gameObject);
+            FindObjectOfType<FootballServer>().SpawnedPlayer(this);
             return;
         }
         Destroy(gameObject);
@@ -53,15 +51,41 @@ public class FootballPlayer : NetworkBehaviour
 
     #region Server
     public GameObject owner;
-   
+    public void SpawnPlayer(int _teamId, Transform _pos)
+    {
+        GameObject temp = Instantiate(prefab, _pos.position, _pos.rotation);
+        temp.GetComponent<FootballController>().teamId = _teamId;
+        myPlayer = temp.GetComponent<FootballController>();
+        myPlayer.owner = this;
+    }
+    [Command]
+    void CMD_PressedStart()
+    {
+        FindObjectOfType<FootballServer>().AllConnectedAndPressedStart();
+    }
     [Command]
     void CMD_RecievedInput(Vector2 input)
     {
-        myPlayer.InputRecieved(input);
+        if(myPlayer != null)
+        {
+            myPlayer.InputRecieved(input);
+        }
+    }
+    public void StartMovement(bool answer)
+    {
+        RPC_StartMovement(answer);
     }
     #endregion
     #region Client
-
+    public void PressedStart()
+    {
+        CMD_PressedStart();
+    }
+    [TargetRpc]
+    void RPC_StartMovement(bool answer)
+    {
+        client.StartMoving(answer);
+    }
     public void RecievedInput(Vector2 input)
     {
         CMD_RecievedInput(input);

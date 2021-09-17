@@ -5,24 +5,54 @@ using UnityEngine;
 public class FootballController : MonoBehaviour
 {
     public FootballPlayer owner;
-    [SerializeField] float speed;
+    public Vector2 input, pos;
+    Vector3 air;
+    [SerializeField] float speed, lerpSpeed, jump;
     [SerializeField] Rigidbody rb;
-    Vector2 inputController;
     Vector3 vPos;
-    
-    void Start()
-    {
-        
-    }
+    [SerializeField] bool grounded;
+    public bool canMove;
+    public int teamId;
 
-    public void InputRecieved(Vector2 input)
+    private void Start()
     {
-        inputController = input;
+        FindObjectOfType<MultiCamera>().targets.Add(this.transform);
     }
-    void Update()
+    public void InputRecieved(Vector2 inp)
     {
-        inputController *= speed;
-        vPos = new Vector3(inputController.y, 0, -inputController.x);
-        rb.AddTorque(vPos, ForceMode.VelocityChange);
+        if(canMove)
+        {
+            input = inp;
+        }
+    }
+    public void PressedJump()
+    {
+        rb.AddForce(new Vector3(0, jump, 0), ForceMode.Impulse);
+    }
+    private void Update()
+    {
+        vPos = new Vector3(input.y, 0, -input.x).normalized;
+    }
+    private void FixedUpdate()
+    {
+        if (Input.GetButtonDown("Jump") && grounded)
+        {
+            print("Jump");
+            rb.AddForce(new Vector3(0, jump, 0), ForceMode.Impulse);
+        }
+        rb.AddTorque(vPos * speed, ForceMode.Force);
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        grounded = true;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        StartCoroutine(JumpCD());
+    }
+    IEnumerator JumpCD()
+    {
+        yield return new WaitForSeconds(0.1f);
+        grounded = false;
     }
 }

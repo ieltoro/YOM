@@ -96,6 +96,21 @@ public class PlayerScript : NetworkBehaviour
         CMD_VotesCasted(amount);
     }
 
+
+    #region Minigames
+
+    public void MiniGameDirectionList(int i)
+    {
+        CMD_MiniGDirection(i);
+    }
+
+    public void ConnectedToMinigame(int miniG)
+    {
+        print(1);
+        CMD_ConnectedToMinigame(miniG);
+    }
+
+    #endregion
     #endregion
 
 
@@ -104,6 +119,7 @@ public class PlayerScript : NetworkBehaviour
 
     #region Server
     public GameObject currentChild;
+
     public void AssignAsLeader()
     {
         RPC_AssignLeader();
@@ -126,6 +142,11 @@ public class PlayerScript : NetworkBehaviour
     {
         hp = i;
     }
+    public void UpdateAmountsBalanceOnClients()
+    {
+        RPC_UpdateAmountsBalanceOnClients(votesBalance);
+    }
+
     [Command]
     void ConnectUpdate(string pname, int cosmeticNr, string pid)
     {
@@ -136,11 +157,6 @@ public class PlayerScript : NetworkBehaviour
         this.gameObject.name = pname + "Prefab";
         FindObjectOfType<LobbySetup>().PlayerJoinedLobby(pname);
     }
-
-    public void UpdateAmountsBalanceOnClients()
-    {
-        RPC_UpdateAmountsBalanceOnClients(votesBalance);
-    }
     [Command]
     void CMD_VotesCasted(int amount)
     {
@@ -149,7 +165,20 @@ public class PlayerScript : NetworkBehaviour
         currentChild.GetComponent<CharacterGame>().votes = amount;
         FindObjectOfType<GameSetup>().PlayerHaveVoted();
     }
-
+    [Command]
+    void CMD_MiniGDirection(int i)
+    {
+        FindObjectOfType<MinigamesManager>().PressedDirection(i);
+    }
+    [Command]
+    void CMD_ConnectedToMinigame(int miniG)
+    {
+        print(2);
+        if(miniG == 1)
+        {
+            FindObjectOfType<FootballServer>().ConnectedToMiniGame(this.gameObject);
+        }
+    }
     #endregion
 
 }

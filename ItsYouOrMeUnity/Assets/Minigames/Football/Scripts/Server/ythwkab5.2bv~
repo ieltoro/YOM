@@ -1,0 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FootballGoal : MonoBehaviour
+{
+    [SerializeField] FootballServer setup;
+    [SerializeField] int goalId;
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Ball")
+        {
+            other.transform.GetComponent<FootballTouchHolder>().scored = true;
+            setup.TeamScoredOn(goalId, other.gameObject);
+            Destroy(other.gameObject, 1);
+        }
+    }
+}

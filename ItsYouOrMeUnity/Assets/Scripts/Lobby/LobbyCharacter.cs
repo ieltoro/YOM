@@ -10,6 +10,7 @@ public class LobbyCharacter : NetworkBehaviour
     public CharacterMovement character;
     public string playerID;
 
+
     private void Start()
     {
         if (hasAuthority)
@@ -81,3 +82,4 @@ public class LobbyCharacter : NetworkBehaviour
     }
 
 }
+

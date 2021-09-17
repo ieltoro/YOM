@@ -17,15 +17,16 @@ public class ClientStartup : MonoBehaviour
 
     public void ConnectedToFB()
     {
-        print("Connected11");
         panels[0].SetActive(true);
         panels[3].SetActive(!panels[3].activeSelf);
     }
 
     public void ChangText(string inf)
     {
-        print("Change text " + inf);
-        connText.text = inf;
+        string i = inf;
+        print("Change text " + i);
+        connText.text = i;
+        print("Changed text");
     }
     public void ChangePanel(int nr)
     {

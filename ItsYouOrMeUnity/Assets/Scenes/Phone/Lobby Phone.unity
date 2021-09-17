@@ -428,7 +428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -234.99997, y: 255.77002}
+  m_AnchoredPosition: {x: -235, y: 255.77002}
   m_SizeDelta: {x: 346.2151, y: 118.49811}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &293331927
@@ -1033,14 +1033,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkDiscovery: {fileID: 1133658980}
   canvas:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 1044332786}
   - {fileID: 1729132081}
-  - {fileID: 1693362691}
   - {fileID: 2138685164}
-  manager: {fileID: 0}
+  - {fileID: 1693362691}
 --- !u!4 &1133658978
 Transform:
   m_ObjectHideFlags: 0

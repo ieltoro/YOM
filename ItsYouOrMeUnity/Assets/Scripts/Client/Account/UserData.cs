@@ -18,7 +18,6 @@ public struct PlayerBalance
 
     [FirestoreProperty]
     public int packs { get; set; }
-
 }
 [FirestoreData]
 public struct PlayerInfo
@@ -113,6 +112,33 @@ public struct MytownCasino
 }
 
 
+
+
+[FirestoreData]
+public class Användare
+{
+    [FirestoreProperty]
+    public string Namn { get; set; }
+
+    [FirestoreProperty]
+    public string Adress { get; set; }
+
+    [FirestoreProperty]
+    public string Ort { get; set; }
+}
+
+[FirestoreData]
+public class Info
+{
+    public string Onskemal { get; set; }
+}
+
+
+
+
+
+
+
 #endregion
 #region Economy
 
@@ -128,3 +154,6 @@ public struct Economy
 }
 
 #endregion
+
+
+
